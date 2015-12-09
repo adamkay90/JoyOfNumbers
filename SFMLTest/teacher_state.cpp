@@ -176,7 +176,7 @@ void TeacherState::SetupGui() {
 	tgui::Picture::Ptr picture(*gui, "Potato");
 	picture->load("TGUI-0.6/widgets/Ross_Face.png");
 	picture->setSize(400, 400);
-	picture->setPosition((this->game->window.getSize().x - 400)* (1 / 2.f), (this->game->window.getSize().y - 400)*(1 / 2.f));
+	picture->setPosition((this->game->window.getSize().x)* (1 / 2.f), (this->game->window.getSize().y - 400)*(1 / 2.f));
 	picture->bindCallback(tgui::Picture::LeftMouseClicked);
 	picture->setCallbackId(1);
 	picture_ptr = picture;
@@ -184,63 +184,60 @@ void TeacherState::SetupGui() {
 
 	tgui::Label::Ptr label(*gui);
 	label->setSize(400, 100);
-	label->setPosition((this->game->window.getSize().x - 400)* (1 / 2.f), (this->game->window.getSize().y + 400)*(1 / 2.f));
+	label->setPosition((this->game->window.getSize().x)* (1 / 2.f), (this->game->window.getSize().y + 400)*(1 / 2.f));
 	label->setTextColor(sf::Color(100, 0, 160, 250));
 	label->setText("Click On Ross to get HTML");
 	label->bindCallback(tgui::Label::LeftMouseClicked);
 	label->setCallbackId(2);
 	label_ptr = label;
 
-	tgui::Button::Ptr button2(*gui);
-	button2->load("TGUI-0.6/widgets/Black.conf");
-	button2->setSize(30, 60);
-	button2->setPosition(30, this->game->window.getSize().y - 170);
-	button2->setText("Register User");
-	button2->bindCallback(tgui::Button::LeftMouseClicked);
-	button2->setCallbackId(3);
-
-	tgui::Button::Ptr button3(*gui);
-	button3->load("TGUI-0.6/widgets/Black.conf");
-	button3->setSize(30, 60);
-	button3->setPosition(160, this->game->window.getSize().y - 170);
-	button3->setText("Delete User");
-	button3->bindCallback(tgui::Button::LeftMouseClicked);
-	button3->setCallbackId(4);
 	
-	tgui::Button::Ptr button4(*gui);
-	button4->load("TGUI-0.6/widgets/Black.conf");
-	button4->setSize(30, 60);
-	button4->setPosition(290, this->game->window.getSize().y - 170);
-	button4->setText("Rename User");
-	button4->bindCallback(tgui::Button::LeftMouseClicked);
-	button4->setCallbackId(5);
+	tgui::Button::Ptr submit_button(*gui);
+	submit_button->load("TGUI-0.6/widgets/Black.conf");
+	submit_button->setSize(30, 60);
+	submit_button->setPosition(490, this->game->window.getSize().y - 170);
+	submit_button->setText("Submit");
+	submit_button->bindCallback(tgui::Button::LeftMouseClicked);
+	submit_button->setCallbackId(3);
 
 
 
 	tgui::EditBox::Ptr user_name_text(*gui, "username");
 	user_name_text->load("TGUI-0.6/widgets/White.conf");
 	user_name_text->setSize(400, 40);
-	user_name_text->setPosition(30, this->game->window.getSize().y - 570);
+	user_name_text->setPosition(200, this->game->window.getSize().y - 670);
 
 	tgui::EditBox::Ptr first_name_text(*gui, "firstname");
 	first_name_text->load("TGUI-0.6/widgets/White.conf");
 	first_name_text->setSize(400, 40);
-	first_name_text->setPosition(30, this->game->window.getSize().y - 470);
+	first_name_text->setPosition(200, this->game->window.getSize().y - 570);
 
-	tgui::EditBox::Ptr last_name_text(*gui, "username");
+	tgui::EditBox::Ptr last_name_text(*gui, "lastname");
 	last_name_text->load("TGUI-0.6/widgets/White.conf");
 	last_name_text->setSize(400, 40);
-	last_name_text->setPosition(30, this->game->window.getSize().y - 370);
+	last_name_text->setPosition(200, this->game->window.getSize().y - 470);
 
-	tgui::EditBox::Ptr password_text(*gui, "username");
+	tgui::EditBox::Ptr password_text(*gui, "password");
 	password_text->load("TGUI-0.6/widgets/White.conf");
 	password_text->setSize(400, 40);
-	password_text->setPosition(30, this->game->window.getSize().y - 270);
+	password_text->setPosition(200, this->game->window.getSize().y - 370);
 
 	tgui::Checkbox::Ptr instructor_checkbox(*gui, "instructor");
 	instructor_checkbox->load("TGUI-0.6/widgets/White.conf");
-	instructor_checkbox->setPosition(100, 100);
-	
+	instructor_checkbox->setPosition(200, this->game->window.getSize().y - 270);
+
+	tgui::RadioButton::Ptr radio_register(*gui, "radio_register");
+	radio_register->load("TGUI-0.6/widgets/White.conf");
+	radio_register->setPosition(350, this->game->window.getSize().y-170);
+
+	tgui::RadioButton::Ptr radio_delete(*gui, "radio_delete");
+	radio_delete->load("TGUI-0.6/widgets/White.conf");
+	radio_delete->setPosition(350, this->game->window.getSize().y - 150);
+
+	tgui::RadioButton::Ptr radio_rename(*gui, "radio_rename");
+	radio_rename->load("TGUI-0.6/widgets/White.conf");
+	radio_rename->setPosition(350, this->game->window.getSize().y - 130);
+
 
 }
 TeacherState::TeacherState(Game* game)
