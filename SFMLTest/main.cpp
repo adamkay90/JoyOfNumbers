@@ -13,13 +13,16 @@ int main()
 	ClientSocket::register_user("user_name", "First", "Last", "HelloWorld", false); 
 	ClientSocket::login("user_name", "HelloWorld"); 
 	ClientSocket::quiz_score(sf::Uint64(1), sf::Uint64(1));
-	ClientSocket::quiz_info(); 
+	ClientSocket::lesson_progress(sf::Uint64{ 1 }, sf::Uint64{ 1 });
+	ClientSocket::quiz_info();
+	ClientSocket::lesson_info();
+	ClientSocket::html();
 	*/
-
 	Game game;
 	
-	game.pushState(new GameStateLogin(&game));
-	//game.pushState(new TeacherState(&game));
+	//game.pushState(new GameStateLogin(&game));
+	game.pushState(new TeacherState(&game));
+	//game.pushState(new QuizState(&game));
 	game.gameLoop();
 	
 	return 0;

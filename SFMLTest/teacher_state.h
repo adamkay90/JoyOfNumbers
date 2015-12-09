@@ -14,7 +14,10 @@ private:
 
 	void loadMenu();
 	void onRossClick();
+	void onLabelClick();
 
+	tgui::Label::Ptr label_ptr;
+	tgui::Picture::Ptr picture_ptr;
 public:
 
 	b2Vec2* gravity;

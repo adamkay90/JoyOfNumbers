@@ -1,11 +1,12 @@
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 #include "client_socket.h"
-
+//TODO use actual number of lessons for quiz info and lesson info
 namespace{
-	static const char* const IP_ADDRESS = "155.99.175.189";
+	static const char* const IP_ADDRESS = "155.99.173.115";
 	static const int PORT = 55555; 
 	static sf::Uint64 user_id_ = 0;
 	static std::string user_name_; 
@@ -71,7 +72,7 @@ void ClientSocket::register_user(std::string user_name, std::string first_name, 
 	instructor_ = false;
 	
 	sf::Packet send_packet;
-	send_packet << sf::Uint64(2) << user_name << password << first_name << last_name << instructor;
+	send_packet << sf::Uint64(2) << user_name << first_name << last_name<<password << instructor;
 	if (socket.send(send_packet) != sf::Socket::Done){
 		std::cout << "Sending failed" << std::endl;
 		return;
@@ -129,7 +130,7 @@ void ClientSocket::html(){
 	
 	sf::Uint64 receive_enum;
 	std::string html_info; 
-	response_packet >> receive_enum >> html_info;
+	response_packet >> receive_enum;
 	
 	if (receive_enum != sf::Uint64(3)){
 		//register failed.
@@ -137,7 +138,13 @@ void ClientSocket::html(){
 	}
 	else{
 		//register succeeded
+
+		response_packet >> html_info;
 		std::cout << html_info << std::endl;
+		std::ofstream output_stream("PROGRESS_REPORT.html", std::ios::out | std::ios::binary);
+		output_stream.exceptions(std::ofstream::failbit | std::ofstream::badbit);
+
+		output_stream << html_info;
 	}
 
 	socket.disconnect(); 
@@ -194,6 +201,7 @@ void ClientSocket::lesson_progress(sf::Uint64 lesson_id, sf::Uint64 lesson_secti
 	}
 	
 	sf::Uint64 receive_enum;
+	response_packet >> receive_enum;
 	if (receive_enum != sf::Uint64(5)){
 		//register failed.
 		std::cerr << "Incorrect ENUM" << std::endl;
@@ -234,8 +242,8 @@ void ClientSocket::quiz_info(){
 	}
 	else{
 		sf::Uint64 quiz;
-		for (std::vector<std::vector<std::string>>::size_type i{ 0 }; i < 10; ++i){
-			response_packet >> quiz;
+		for (std::vector<std::vector<std::string>>::size_type i{ 0 }; i < 5; ++i){
+			response_packet >> quiz;//TODO use actual number of lessons for quiz info and lesson info
 			quizzes_.emplace_back(quiz); 
 			std::cout << quiz << std::endl;
 		}
@@ -276,10 +284,10 @@ void ClientSocket::lesson_info(){
 	}
 	else{
 		sf::Uint64 lesson_section;
-		for (std::vector<std::vector<std::string>>::size_type i{ 0 }; i < 10; ++i){
-			response_packet >> lesson_section;
+		for (std::vector<std::vector<std::string>>::size_type i{ 0 }; i < 4; ++i){
+			response_packet >> lesson_section;//TODO use actual number of lessons for quiz info and lesson info
 			sections_.emplace_back(lesson_section); 
-			std::cout << lesson_section << std::endl;
+			std::cout << sections_[i] << std::endl;
 		}
 	}
 	socket.disconnect();

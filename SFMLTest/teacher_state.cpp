@@ -72,7 +72,9 @@ void TeacherState::update(const float dt)
 void TeacherState::onRossClick(){
 	std::cout << "HELLO" << std::endl;//needs to be an html call
 }
-
+void TeacherState::onLabelClick(){
+	
+}
 void TeacherState::handleInput()
 {
 	sf::Event event;
@@ -109,7 +111,12 @@ void TeacherState::handleInput()
 		// Make sure tha callback comes from the button
 		if (callback.id == 1)
 		{
+			gui->get("Potato")->setSize(100, 100);
+			//picture_ptr->setSize(100, 100);
 			onRossClick();
+		}
+		else if (callback.id==2){
+			label_ptr->setText("I'M NOT ROSS. try again");
 		}
 	}
 
@@ -162,31 +169,79 @@ void TeacherState::loadMenu()
 }
 
 void TeacherState::SetupGui() {
-	// Create the login button
-	tgui::Button::Ptr button(*gui);
-	//button->setSize(400, 400);
-	button->load("TGUI-0.6/widgets/bernie_test.conf");
-	button->setSize(400, 400);
-	std::cout << button->getFullSize().x << std::endl;
-	std::cout << button->getFullSize().y << std::endl;
-	std::cout << button->getSize().x << std::endl;
-	std::cout << button->getSize().y << std::endl;
-	//button->setSize(400, 400);
-	//button->setPosition(this->game->window.getSize().x * (1 / 3.f) - 130, this->game->window.getSize().y - 70);
-	button->setPosition((this->game->window.getSize().x -400)* (1 / 2.f), (this->game->window.getSize().y-400)*(1/2.f));
-	button->setText("Get HTML Info");
-	button->bindCallback(tgui::Button::LeftMouseClicked);
-	button->setCallbackId(1);
-	
-	/*
+
+
+
+
+	tgui::Picture::Ptr picture(*gui, "Potato");
+	picture->load("TGUI-0.6/widgets/Ross_Face.png");
+	picture->setSize(400, 400);
+	picture->setPosition((this->game->window.getSize().x - 400)* (1 / 2.f), (this->game->window.getSize().y - 400)*(1 / 2.f));
+	picture->bindCallback(tgui::Picture::LeftMouseClicked);
+	picture->setCallbackId(1);
+	picture_ptr = picture;
+
+
+	tgui::Label::Ptr label(*gui);
+	label->setSize(400, 100);
+	label->setPosition((this->game->window.getSize().x - 400)* (1 / 2.f), (this->game->window.getSize().y + 400)*(1 / 2.f));
+	label->setTextColor(sf::Color(100, 0, 160, 250));
+	label->setText("Click On Ross to get HTML");
+	label->bindCallback(tgui::Label::LeftMouseClicked);
+	label->setCallbackId(2);
+	label_ptr = label;
+
 	tgui::Button::Ptr button2(*gui);
 	button2->load("TGUI-0.6/widgets/Black.conf");
 	button2->setSize(30, 60);
-	button2->setPosition(this->game->window.getSize().x * (1 / 3.f) - 130, this->game->window.getSize().y - 70);
-	button2->setText("Login");
+	button2->setPosition(30, this->game->window.getSize().y - 170);
+	button2->setText("Register User");
 	button2->bindCallback(tgui::Button::LeftMouseClicked);
-	button2->setCallbackId(2);
-	*/
+	button2->setCallbackId(3);
+
+	tgui::Button::Ptr button3(*gui);
+	button3->load("TGUI-0.6/widgets/Black.conf");
+	button3->setSize(30, 60);
+	button3->setPosition(160, this->game->window.getSize().y - 170);
+	button3->setText("Delete User");
+	button3->bindCallback(tgui::Button::LeftMouseClicked);
+	button3->setCallbackId(4);
+	
+	tgui::Button::Ptr button4(*gui);
+	button4->load("TGUI-0.6/widgets/Black.conf");
+	button4->setSize(30, 60);
+	button4->setPosition(290, this->game->window.getSize().y - 170);
+	button4->setText("Rename User");
+	button4->bindCallback(tgui::Button::LeftMouseClicked);
+	button4->setCallbackId(5);
+
+
+
+	tgui::EditBox::Ptr user_name_text(*gui, "username");
+	user_name_text->load("TGUI-0.6/widgets/White.conf");
+	user_name_text->setSize(400, 40);
+	user_name_text->setPosition(30, this->game->window.getSize().y - 570);
+
+	tgui::EditBox::Ptr first_name_text(*gui, "firstname");
+	first_name_text->load("TGUI-0.6/widgets/White.conf");
+	first_name_text->setSize(400, 40);
+	first_name_text->setPosition(30, this->game->window.getSize().y - 470);
+
+	tgui::EditBox::Ptr last_name_text(*gui, "username");
+	last_name_text->load("TGUI-0.6/widgets/White.conf");
+	last_name_text->setSize(400, 40);
+	last_name_text->setPosition(30, this->game->window.getSize().y - 370);
+
+	tgui::EditBox::Ptr password_text(*gui, "username");
+	password_text->load("TGUI-0.6/widgets/White.conf");
+	password_text->setSize(400, 40);
+	password_text->setPosition(30, this->game->window.getSize().y - 270);
+
+	tgui::Checkbox::Ptr instructor_checkbox(*gui, "instructor");
+	instructor_checkbox->load("TGUI-0.6/widgets/White.conf");
+	instructor_checkbox->setPosition(100, 100);
+	
+
 }
 TeacherState::TeacherState(Game* game)
 {
@@ -222,10 +277,10 @@ TeacherState::TeacherState(Game* game)
 	
 	SetupGui();
 
-	gravity = new b2Vec2(0.f, 9.8f);
-	world = new b2World(*gravity);
+	//gravity = new b2Vec2(0.f, 9.8f);
+	//world = new b2World(*gravity);
 
-	CreateGround(*world, 400.f, 500.f);
+	//CreateGround(*world, 400.f, 500.f);
 
 }
 
