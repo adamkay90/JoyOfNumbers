@@ -19,6 +19,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu_state.cpp" />
     <ClCompile Include="quiz_state.cpp" />
+    <ClCompile Include="register_state.cpp" />
     <ClCompile Include="teacher_state.cpp" />
     <ClCompile Include="texture_manager.cpp" />
   </ItemGroup>
@@ -31,6 +32,7 @@
     <ClInclude Include="game_state_start.h" />
     <ClInclude Include="menu_state.h" />
     <ClInclude Include="quiz_state.h" />
+    <ClInclude Include="register_state.h" />
     <ClInclude Include="teacher_state.h" />
     <ClInclude Include="texture_manager.h" />
   </ItemGroup>

@@ -1,18 +1,4 @@
 #include "game_state_login.h"
-#include "quiz_state.h"
-#include <iostream>
-
-sf::Sprite logo;
-sf::Sprite face;
-sf::Music background;
-
-float flipTime = 0.3;
-float angle1 = 30;
-float angle2 = 325;
-float faceTimer;
-
-float spinSpeed = 270;
-
 
 
 void GameStateLogin::draw(const float dt)
@@ -68,20 +54,6 @@ void GameStateLogin::update(const float dt)
 	}
 
 	world->Step(1 / 60.f, 8, 3);
-
-	// This makes Bob Ross's face flip between two angles
-	/*
-	faceTimer -= dt;
-	if (faceTimer <= 0) {
-		if (face.getRotation() == angle1) {
-			face.setRotation(angle2);
-		}
-		else if (face.getRotation() == angle2) {
-			face.setRotation(angle1);
-		}
-		faceTimer = flipTime;
-	}
-	*/
 	
 	// This makes Bob Ross's face spin
 	face.setRotation(face.getRotation() + spinSpeed * dt);
@@ -228,7 +200,7 @@ void GameStateLogin::onLoginButtonClick() {
 }
 
 void GameStateLogin::onRegisterButtonClick() {
-
+	this->game->pushState(new RegisterState(this->game));
 }
 
 void GameStateLogin::getDataFromTextBoxes() {

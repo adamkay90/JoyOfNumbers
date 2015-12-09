@@ -10,12 +10,15 @@
 // Pushes a new state onto the state stack
 void Game::pushState(GameState* state) {
 	this->states.push(state);
+	return;
 }
 
 // Pops a state off the state stack
 void Game::popState() {
 	delete this->states.top();
 	this->states.pop();
+
+	return;
 }
 
 // Changes the current state. 
@@ -24,6 +27,8 @@ void Game::changeState(GameState* state) {
 		popState();
 	}
 	pushState(state);
+
+	return;
 }
 
 
@@ -63,6 +68,8 @@ void Game::gameLoop() {
 		this->window.clear(sf::Color::Black);
 		peekState()->draw(deltaTime);
 		this->window.display();
+
+		
 	}
 }
 

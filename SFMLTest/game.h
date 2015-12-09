@@ -20,6 +20,7 @@ public:
 	std::string password;
 	std::string firstName;
 	std::string lastName;
+	bool isTeacher;
 
 	// The state stack
 	std::stack<GameState*> states;
