@@ -63,8 +63,21 @@ void Game::gameLoop() {
 
 		// If there is a state, check for input, update the state,
 		// Clear the window, and draw
+
+		if (poppedState) {
+			poppedState = false;
+			continue;
+		}
 		peekState()->handleInput();
+		if (poppedState) {
+			poppedState = false;
+			continue;
+		}
 		peekState()->update(deltaTime);
+		if (poppedState) {
+			poppedState = false;
+			continue;
+		}
 		this->window.clear(sf::Color::Black);
 		peekState()->draw(deltaTime);
 		this->window.display();

@@ -22,6 +22,8 @@ public:
 	std::string lastName;
 	bool isTeacher;
 
+	bool poppedState;
+
 	// The state stack
 	std::stack<GameState*> states;
 

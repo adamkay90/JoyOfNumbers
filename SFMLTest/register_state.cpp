@@ -60,8 +60,9 @@ void RegisterState::handleInput()
 		}
 		else if (callback.id == 2) {
 			// For the back button
-			std::cout << "Back button clicked!" << std::endl;
+			this->game->poppedState = true;
 			this->game->popState();
+			return;
 
 		}
 	}
@@ -193,8 +194,5 @@ void RegisterState::SetupGui() {
 }
 
 RegisterState::~RegisterState() {
-	std::cout << "Started deconstructing!" << std::endl;
-	gui->removeAllWidgets();
 	delete gui;
-	std::cout << "Ended deconstructing!" << std::endl;
 }
