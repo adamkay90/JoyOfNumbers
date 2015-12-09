@@ -46,6 +46,7 @@ void RegisterState::handleInput()
 	// Handle the gui callbacks
 	tgui::Callback callback;
 
+	if (gui == nullptr) return;
 	while (gui->pollCallback(callback))
 	{
 		// Make sure tha callback comes from the button
@@ -60,7 +61,7 @@ void RegisterState::handleInput()
 		else if (callback.id == 2) {
 			// For the back button
 			std::cout << "Back button clicked!" << std::endl;
-			this->game->pushState(new GameStateLogin(this->game));
+			this->game->popState();
 
 		}
 	}
@@ -192,5 +193,8 @@ void RegisterState::SetupGui() {
 }
 
 RegisterState::~RegisterState() {
+	std::cout << "Started deconstructing!" << std::endl;
+	gui->removeAllWidgets();
 	delete gui;
+	std::cout << "Ended deconstructing!" << std::endl;
 }
