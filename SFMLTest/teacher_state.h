@@ -13,6 +13,7 @@ private:
 	sf::View view;
 
 	void loadMenu();
+	void onRossClick();
 
 public:
 

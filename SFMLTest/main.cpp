@@ -6,7 +6,7 @@
 #include "game_state_login.h"
 #include "quiz_state.h"
 #include "client_socket.h"
-
+#include "teacher_state.h"
 int main()
 {
 	/*
@@ -19,6 +19,7 @@ int main()
 	Game game;
 	
 	game.pushState(new GameStateLogin(&game));
+	//game.pushState(new TeacherState(&game));
 	game.gameLoop();
 	
 	return 0;
