@@ -292,3 +292,73 @@ void ClientSocket::lesson_info(){
 	}
 	socket.disconnect();
 }
+
+void ClientSocket::test(){
+	std::vector<sf::Uint64> user_id_local;
+	std::vector<std::string> user_names{"user1", "user2", "user3", "user4", "user5"}; 
+	std::vector<std::string> first{"Joe", "Tim", "Tom", "Brynn", "Bob"};
+	std::vector<std::string> last{ "Alexis", "Bohensky", "Cobell", "Kasik", "Ross"};
+	std::vector<std::string> password{ "a", "b", "c", "d", "e" };
+	std::vector<bool> instructor_status{ false, false, false, false, false};
+	
+	for (int i = 0; i < 5; i++){
+		register_user(user_names[i], first[i], last[i], password[i], instructor_status[i]); 
+		user_id_local.emplace_back(user_id_); 
+	}
+	for (int i = 0; i < 5; i++){
+		login(user_names[i], password[i]);
+		if (user_id_local[i] != user_id_){
+			std::cout << "ERROR: user ids do not match. stored: " << user_id_local[i] << " current: " << user_id_ << std::endl; 
+		}
+	}
+	for (int i = 0; i < 5; i++){
+		user_id_ = user_id_local[i];
+		user_name_ = user_names[i];
+		first_name_ = first[i];
+		last_name_ = last[i];
+		instructor_ = instructor_status[i];
+		
+		for (int j = 1; j <= 4; j++){
+			lesson_progress(sf::Uint64(j), sf::Uint64(j));
+		}
+		for (int j = 1; j <= 4; j++){
+			lesson_progress(sf::Uint64(j), sf::Uint64(3));
+		}
+		for (int j = 1; j <= 4; j++){
+			lesson_progress(sf::Uint64(j), sf::Uint64(1));
+		}
+
+	}
+	for (int i = 0; i < 5; i++){
+		user_id_ = user_id_local[i];
+		user_name_ = user_names[i];
+		first_name_ = first[i];
+		last_name_ = last[i];
+		instructor_ = instructor_status[i];
+		
+		for (int j = 1; j <= 5; j++){
+			quiz_score(sf::Uint64(j), sf::Uint64(j));
+		}
+		for (int j = 1; j <= 5; j++){
+			quiz_score(sf::Uint64(j), sf::Uint64(3));
+		}
+		for (int j = 1; j <= 5; j++){
+			quiz_score(sf::Uint64(j), sf::Uint64(1));
+		}
+	}
+
+	register_user("DROP TABLE USERS;", "blah", "lolz", "test", true); 
+	register_user("SELECT * FROM USERS;", "trial1", "trial2", "password", true); 
+	/*for (int i = 0; i < 5; i++){
+		user_id_ = user_id_local[i];
+		user_name_ = user_names[i];
+		first_name_ = first[i];
+		last_name_ = last[i];
+		instructor_ = instructor_status[i];
+	}*/
+	
+	/*quiz_info();
+	lesson_info();*/
+
+	html();
+}

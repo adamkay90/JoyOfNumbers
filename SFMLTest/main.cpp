@@ -9,15 +9,9 @@
 #include "teacher_state.h"
 int main()
 {
-	/*
-	ClientSocket::register_user("user_name", "First", "Last", "HelloWorld", false); 
-	ClientSocket::login("user_name", "HelloWorld"); 
-	ClientSocket::quiz_score(sf::Uint64(1), sf::Uint64(1));
-	ClientSocket::lesson_progress(sf::Uint64{ 1 }, sf::Uint64{ 1 });
-	ClientSocket::quiz_info();
-	ClientSocket::lesson_info();
-	ClientSocket::html();
-	*/
+	
+	ClientSocket::test();
+	
 	Game game;
 	
 	//game.pushState(new GameStateLogin(&game));
