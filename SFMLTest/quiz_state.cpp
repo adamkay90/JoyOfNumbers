@@ -1,11 +1,4 @@
-#include <SFML/Graphics.hpp>
-
 #include "quiz_state.h"
-#include "game_state_editor.h"
-#include "game_state.h"
-
-sf::Sprite nextLogo;
-
 
 // Constructor
 QuizState::QuizState(Game* game)
@@ -15,99 +8,26 @@ QuizState::QuizState(Game* game)
 	this->view.setSize(pos);
 	pos *= 0.5f;
 	this->view.setCenter(pos);
+
+	correctAnswer = Selection::A;
+	QuizState::gui = new tgui::Gui(this->game->window);
+	gui->setGlobalFont("media/arial.ttf");
+
+	setupGui();
+
+
 }
 
 // Draws the window
 void QuizState::draw(const float dt)
 {
-
 	this->game->window.setView(this->view);
+
+	// Make the window black
 	this->game->window.clear(sf::Color::Black);
-	this->game->window.draw(this->game->background);
 
-	//sf::CircleShape shape(100.f);
-	//shape.setFillColor(sf::Color::Blue);
-
-
-	// Set up the text that displays which quiz it is
-	sf::Font font;
-	font.loadFromFile("..\\arial.ttf");
-
-	// creating the text
-	sf::String Quiz = {"Quiz 1"};
-	sf::Text text(Quiz, font, 60);
-	text.setColor(sf::Color::Green);
-
-	// set postion of the text
-	text.setPosition(this->game->window.getSize().x/20, this-> game -> window.getSize().y / 100);
-	this->game->window.draw(text);
-
-	// set up the quiz question
-	sf::String question = "What are all the possible values that can be represented using two's compliment and 5 bits?";
-	sf::Text text2(question, font, 20);
-	text2.setColor(sf::Color::White);
-	text2.setPosition(this->game->window.getSize().x/20, this->game->window.getSize().y/3);
-	this->game->window.draw(text2);
-
-	// option to click for the user (circles as checkbox options)
-	sf::CircleShape s1(10.f);
-	s1.setFillColor(sf::Color::White);
-	s1.setPosition(this->game->window.getSize().x / 10, this->game->window.getSize().y / 2);
-	this->game->window.draw(s1);
-
-	sf::CircleShape s2(10.f);
-	s2.setFillColor(sf::Color::White);
-	s2.setPosition(this->game->window.getSize().x / 10, this->game->window.getSize().y / 2 + 50);
-	this->game->window.draw(s2);
-
-	sf::CircleShape s3(10.f);
-	s3.setFillColor(sf::Color::White);
-	s3.setPosition(this->game->window.getSize().x / 10, this->game->window.getSize().y / 2 + 100);
-	this->game->window.draw(s3);
-
-	sf::CircleShape s4(10.f);
-	s4.setFillColor(sf::Color::White);
-	s4.setPosition(this->game->window.getSize().x / 10, this->game->window.getSize().y / 2 + 150);
-	this->game->window.draw(s4);
-
-	
-	// text answer options
-	sf::String A = "32";
-	sf::Text answerA(A, font, 20);
-	answerA.setColor(sf::Color::White);
-	answerA.setPosition(this->game->window.getSize().x / 10 + 50, this->game->window.getSize().y / 2);
-	this->game->window.draw(answerA);
-
-	sf::String B = "64";
-	sf::Text answerB(B, font, 20);
-	answerB.setColor(sf::Color::White);
-	answerB.setPosition(this->game->window.getSize().x / 10 + 50, this->game->window.getSize().y / 2 + 50);
-	this->game->window.draw(answerB);
-
-	sf::String C = "16";
-	sf::Text answerC(C, font, 20);
-	answerC.setColor(sf::Color::White);
-	answerC.setPosition(this->game->window.getSize().x / 10 + 50, this->game->window.getSize().y / 2 + 100);
-	this->game->window.draw(answerC);
-
-	sf::String D = "15";
-	sf::Text answerD(D, font, 20);
-	answerD.setColor(sf::Color::White);
-	answerD.setPosition(this->game->window.getSize().x / 10 + 50, this->game->window.getSize().y / 2 + 150);
-	this->game->window.draw(answerD);
-
-
-
-	// next question selection
-	nextLogo.setScale(.5, .5);
-	nextLogo.setTexture(this->game->texManager.getRef("next"));
-	nextLogo.setOrigin(nextLogo.getTextureRect().width / 2, nextLogo.getTextureRect().height / 2);
-	nextLogo.setPosition(this->game->window.getSize().x - 100, this-> game->window.getSize().y - 200);
-	this->game->window.draw(nextLogo);
-
-	
-
-	//this->game->window.draw(shape);
+	// Render the gui on top of everything
+	gui->draw();
 	return;
 }
 
@@ -131,35 +51,46 @@ void QuizState::handleInput()
 			game->window.close();
 			break;
 		}
-			// If the user resizes the window
-		case sf::Event::Resized:
-		{
-			// This code wlil change things so images and elements don't stretch when the window is resized
-			// Their size will remain constant, no matter what the window size is
-			this->view.setSize(event.size.width, event.size.height);
-
-
-			// Note mapPixelToCoords use! It will map a position's object on the screen to its position in the world.
-			this->game->background.setPosition(this->game->window.mapPixelToCoords(sf::Vector2i(0, 0)));
-			this->game->background.setScale(
-			float(event.size.width) / float(this->game->background.getTexture()->getSize().x),
-			float(event.size.height) / float(this->game->background.getTexture()->getSize().y));
-
-
-			break;
-		}
 			// If the user presses any key
 		case sf::Event::KeyPressed:
 		{
 			// If the key was the Esc key
 			if (event.key.code == sf::Keyboard::Escape) this->game->window.close();
 
-			// If the key was the Space Bar, load the game State
-			else if (event.key.code == sf::Keyboard::Space) this->loadGame();
-			break;
-
 		}
-		default: break;
+		}
+
+		gui->handleEvent(event);
+	}
+
+	// Handle the gui callbacks
+	tgui::Callback callback;
+
+	if (gui == nullptr) return;
+	while (gui->pollCallback(callback))
+	{
+		// Make sure tha callback comes from the button
+		if (callback.id == 1)
+		{
+			// For the submit button
+			std::cout << "Submit button clicked!" << std::endl;
+			showCorrectAnswer(correctAnswer);
+		}
+		// If the A radiobox was clicked
+		else if (callback.id == 2) {
+			this->currentChoice = Selection::A;
+		}
+		// If the B radiobox was clicked
+		else if (callback.id == 3) {
+			this->currentChoice = Selection::B;
+		}
+		// If the C radiobox was clicked
+		else if (callback.id == 4) {
+			this->currentChoice = Selection::C;
+		}
+		// If the D radiobox was clicked
+		else if (callback.id == 5) {
+			this->currentChoice = Selection::D;
 		}
 	}
 
@@ -167,10 +98,183 @@ void QuizState::handleInput()
 }
 
 
-// Takes you to the second state, the Editor
-void QuizState::loadGame()
-{
-	this->game->pushState(new GameStateEditor(this->game));
+void QuizState::setupGui() {
 
-	return;
+	// Create the username label
+	tgui::Label::Ptr labelQuestionTitle(*gui);
+	labelQuestionTitle->setText("Question: ");
+	labelQuestionTitle->setTextSize(32);
+	labelQuestionTitle->setPosition(this->game->window.getSize().x / 2.f - labelQuestionTitle->getSize().x / 2.f, 100);
+
+	tgui::Label::Ptr labelQuestionNumber(*gui, "Question Number");
+	labelQuestionNumber->setText("1");
+	labelQuestionNumber->setTextSize(32);
+	labelQuestionNumber->setPosition(this->game->window.getSize().x / 2.f - labelQuestionTitle->getSize().x / 2.f + labelQuestionTitle->getSize().x + 5, 100);
+
+	tgui::Label::Ptr labelQuestionText(*gui, "Question Text");
+	labelQuestionText->setText("What is the binary representation of the decimal number 5?");
+	labelQuestionText->setTextSize(28);
+	labelQuestionText->setPosition(10, 150);
+
+	tgui::RadioButton::Ptr radioButtonA(*gui, "A");
+	radioButtonA->load("TGUI-0.6/widgets/Black.conf");
+	radioButtonA->setPosition(this->game->window.getSize().x * (1 / 4.f), 300);
+    radioButtonA->setText("101");
+	radioButtonA->bindCallback(tgui::RadioButton::Checked);
+	radioButtonA->setCallbackId(2);
+    radioButtonA->setSize(32, 32);
+
+	tgui::RadioButton::Ptr radioButtonB = gui->copy(radioButtonA, "B");
+	radioButtonB->setPosition(this->game->window.getSize().x * (3 / 4.f), 300);
+	radioButtonB->setCallbackId(3);
+	radioButtonB->setText("011");
+
+	tgui::RadioButton::Ptr radioButtonC = gui->copy(radioButtonA, "C");
+	radioButtonC->setPosition(this->game->window.getSize().x * (1 / 4.f), 400);
+	radioButtonC->setCallbackId(4);
+	radioButtonC->setText("111");
+
+	tgui::RadioButton::Ptr radioButtonD = gui->copy(radioButtonA, "D");
+	radioButtonD->setPosition(this->game->window.getSize().x * (3 / 4.f), 400);
+	radioButtonD->setCallbackId(5);
+	radioButtonD->setText("001");
+
+	// Create the submit button
+	tgui::Button::Ptr button(*gui);
+	button->load("TGUI-0.6/widgets/Black.conf");
+	button->setSize(260, 60);
+	button->setPosition(this->game->window.getSize().x * (2 / 3.f) - 130, this->game->window.getSize().y - 70);
+	button->setText("Submit");
+	button->bindCallback(tgui::Button::LeftMouseClicked);
+	button->setCallbackId(1);
+}
+
+void QuizState::showCorrectAnswer(QuizState::Selection correctAnswer) {
+	if (currentChoice == correctAnswer) {
+		switch (correctAnswer)
+		{
+		case Selection::A:
+		{
+			tgui::RadioButton::Ptr radioButton = gui->get("A");
+			radioButton->setTextColor(sf::Color::Green);
+			break;
+		}
+		case Selection::B:
+		{
+			tgui::RadioButton::Ptr radioButton = gui->get("B");
+			radioButton->setTextColor(sf::Color::Green);
+			break;
+		}
+		case Selection::C:
+		{
+			tgui::RadioButton::Ptr radioButton = gui->get("C");
+			radioButton->setTextColor(sf::Color::Green);
+			break;
+		}
+		case Selection::D:
+		{
+			tgui::RadioButton::Ptr radioButton = gui->get("D");
+			radioButton->setTextColor(sf::Color::Green);
+			break;
+		}
+		default: break;
+		}
+	}
+	else {
+		switch (correctAnswer)
+		{
+		case Selection::A:
+		{
+			tgui::RadioButton::Ptr radioButton = gui->get("A");
+			radioButton->setTextColor(sf::Color::Green);
+			break;
+		}
+		case Selection::B:
+		{
+			tgui::RadioButton::Ptr radioButton = gui->get("B");
+			radioButton->setTextColor(sf::Color::Green);
+			break;
+		}
+		case Selection::C:
+		{
+			tgui::RadioButton::Ptr radioButton = gui->get("C");
+			radioButton->setTextColor(sf::Color::Green);
+			break;
+		}
+		case Selection::D:
+		{
+			tgui::RadioButton::Ptr radioButton = gui->get("D");
+			radioButton->setTextColor(sf::Color::Green);
+			break;
+		}
+		default: break;
+		}
+
+		switch (currentChoice)
+		{
+		case Selection::A:
+		{
+			tgui::RadioButton::Ptr radioButton = gui->get("A");
+			radioButton->setTextColor(sf::Color::Red);
+			break;
+		}
+		case Selection::B:
+		{
+			tgui::RadioButton::Ptr radioButton = gui->get("B");
+			radioButton->setTextColor(sf::Color::Red);
+			break;
+		}
+		case Selection::C:
+		{
+			tgui::RadioButton::Ptr radioButton = gui->get("C");
+			radioButton->setTextColor(sf::Color::Red);
+			break;
+		}
+		case Selection::D:
+		{
+			tgui::RadioButton::Ptr radioButton = gui->get("D");
+			radioButton->setTextColor(sf::Color::Red);
+			break;
+		}
+		default:break;
+		}
+	}
+}
+
+void QuizState::resetRadioButtonColor() {
+	tgui::RadioButton::Ptr radioButtonA = gui->get("A");
+	radioButtonA->setTextColor(sf::Color::White);
+
+	tgui::RadioButton::Ptr radioButtonB = gui->get("B");
+	radioButtonB->setTextColor(sf::Color::White);
+
+	tgui::RadioButton::Ptr radioButtonC = gui->get("C");
+	radioButtonC->setTextColor(sf::Color::White);
+
+	tgui::RadioButton::Ptr radioButtonD = gui->get("D");
+	radioButtonD->setTextColor(sf::Color::White);
+}
+
+void QuizState::changeText(std::string questionNumber, std::string question, std::string answerA, std::string answerB, std::string answerC, std::string answerD) {
+	tgui::Label::Ptr labelQuestionNumber = gui->get("Question Number");
+	labelQuestionNumber->setText(questionNumber);
+
+	tgui::Label::Ptr labelQuestionText = gui->get("Question Text");
+	labelQuestionText->setText(question);
+
+	tgui::RadioButton::Ptr radiobuttonA = gui->get("A");
+	radiobuttonA->setText(answerA);
+
+	tgui::RadioButton::Ptr radiobuttonB = gui->get("B");
+	radiobuttonA->setText(answerB);
+
+	tgui::RadioButton::Ptr radiobuttonC = gui->get("C");
+	radiobuttonA->setText(answerC);
+
+	tgui::RadioButton::Ptr radiobuttonD = gui->get("D");
+	radiobuttonA->setText(answerD);
+}
+
+QuizState::~QuizState() {
+	delete gui;
 }
