@@ -13,8 +13,13 @@ private:
 	sf::View view;
 
 	void loadMenu();
+	
 	void onRossClick();
 	void onLabelClick();
+	void on_submit_click();
+	void on_register_select();
+	void on_remove_select();
+	void on_rename_select();
 
 	tgui::Label::Ptr label_ptr;
 	tgui::Picture::Ptr picture_ptr;

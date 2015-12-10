@@ -10,12 +10,12 @@
 int main()
 {
 	
-	ClientSocket::test();
+	//ClientSocket::test();
 	
 	Game game;
 	
 	//game.pushState(new GameStateLogin(&game));
-	game.pushState(new GameStateLogin(&game));
+	game.pushState(new TeacherState(&game));
 	//game.pushState(new QuizState(&game));
 	game.gameLoop();
 	
