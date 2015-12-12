@@ -171,6 +171,10 @@ void MenuState::setupGui() {
 	button2->setCallbackId(2);
 }
 
+void MenuState::unlockMenu(int menuToUnlock) {
+	unlockedMenus.at(menuToUnlock) == true;
+}
+
 MenuState::~MenuState() {
 	delete gui;
 }
