@@ -17,8 +17,9 @@ int main()
 	Game game;
 	
 	//game.pushState(new GameStateLogin(&game));
-	game.pushState(new MenuState(&game));
+	//game.pushState(new MenuState(&game));
 	//game.pushState(new QuizState(&game));
+	game.pushState(new TeacherState(&game));
 	game.gameLoop();
 	
 	return 0;

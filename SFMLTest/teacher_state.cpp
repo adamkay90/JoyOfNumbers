@@ -69,11 +69,12 @@ void TeacherState::update(const float dt)
 
 	// This makes Bob Ross's face spin
 }
-void TeacherState::onRossClick(){
-	std::cout << "HELLO" << std::endl;//needs to be an html call
-}
-void TeacherState::onLabelClick(){
-	
+void TeacherState::on_ross_click(){
+	//needs to be an html call
+	tgui::Picture::Ptr picture = static_cast<tgui::Picture::Ptr>(gui->get("ross"));
+	picture->load("TGUI-0.6/widgets/potato.jpg");
+	picture->setSize(497, 541);
+	picture->setPosition((this->game->window.getSize().x)* (1 / 2.f), (this->game->window.getSize().y - 800)*(1 / 2.f));
 }
 void TeacherState::on_submit_click(){
 	std::cout << "potato" << std::endl;
@@ -216,10 +217,14 @@ void TeacherState::handleInput()
 		// Make sure tha callback comes from the button
 		if (callback.id == 1)
 		{
-			onRossClick();
+			tgui::Label::Ptr label = static_cast<tgui::Label::Ptr>(gui->get("label"));
+			label->setText("HTML acquired");
+			on_ross_click();
 		}
 		else if (callback.id==2){
-			label_ptr->setText("I'M NOT ROSS. try again");
+			
+			tgui::Label::Ptr label = static_cast<tgui::Label::Ptr>(gui->get("label"));
+			label->setText("I'M NOT ROSS. try again");
 		}
 		else if (callback.id == 3){
 			//submit button
@@ -292,26 +297,24 @@ void TeacherState::SetupGui() {
 
 
 
-	tgui::Picture::Ptr picture(*gui, "Potato");
+	tgui::Picture::Ptr picture(*gui, "ross");
 	picture->load("TGUI-0.6/widgets/Ross_Face.png");
 	picture->setSize(400, 400);
 	picture->setPosition((this->game->window.getSize().x)* (1 / 2.f), (this->game->window.getSize().y - 400)*(1 / 2.f));
 	picture->bindCallback(tgui::Picture::LeftMouseClicked);
 	picture->setCallbackId(1);
-	picture_ptr = picture;
 
 
-	tgui::Label::Ptr label(*gui);
+	tgui::Label::Ptr label(*gui, "label");
 	label->setSize(400, 100);
 	label->setPosition((this->game->window.getSize().x)* (1 / 2.f), (this->game->window.getSize().y + 400)*(1 / 2.f));
 	label->setTextColor(sf::Color(100, 0, 160, 250));
 	label->setText("Click On Ross to get HTML");
 	label->bindCallback(tgui::Label::LeftMouseClicked);
 	label->setCallbackId(2);
-	label_ptr = label;
 
 	
-	tgui::Button::Ptr submit_button(*gui);
+	tgui::Button::Ptr submit_button(*gui, "submit");
 	submit_button->load("TGUI-0.6/widgets/Black.conf");
 	submit_button->setSize(30, 60);
 	submit_button->setPosition(250, this->game->window.getSize().y - 250);
