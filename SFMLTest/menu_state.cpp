@@ -49,13 +49,33 @@ void MenuState::handleInput()
 	if (gui == nullptr) return;
 	while (gui->pollCallback(callback))
 	{
-		// Make sure tha callback comes from the button
-		if (callback.id == 1)
-		{
-			// The Start button
-
+		// A list item was selected
+		if (callback.id == 0) {
+			
 			tgui::ListBox::Ptr listbox = gui->get("List");
 			int id = listbox->getSelectedItemId();
+			
+			tgui::Button::Ptr button = gui->get("Button");
+			
+			// Make the button enabled if the menu item can be selected
+			if (unlockedMenus.at(id) == true) {
+				button->enable();
+				button->setTransparency(255);
+				button->setTextColor(sf::Color(255, 255, 255, 255));
+			}
+			else {
+				button->disable();
+				button->setTransparency(50);
+				button->setTextColor(sf::Color(40, 40, 40, 40));
+			}
+		}
+		// The Submit button was clicked
+		else if (callback.id == 1)
+		{
+			tgui::ListBox::Ptr listbox = gui->get("List");
+			int id = listbox->getSelectedItemId();
+
+			
 
 			// This is where it'll load either a lesson state or a quiz state
 			switch (id) {
@@ -72,8 +92,9 @@ void MenuState::handleInput()
 				break;
 			}
 		}
+		// The logout button was clicked
 		else if (callback.id == 2) {
-			// Logout button
+			
 			this->game->popState();
 		}
 	}
@@ -94,6 +115,9 @@ MenuState::MenuState(Game* game)
 
 	setupGui();
 
+	unlockedMenus.resize(10);
+	unlockedMenus.at(0) = true;
+
 }
 
 
@@ -103,10 +127,13 @@ void MenuState::setupGui() {
 	listBox->setSize(800, 600);
 	listBox->setItemHeight(50);
 	listBox->setPosition(240, 50);
-	listBox->addItem("Lesson 1: Binary Numbers", 1);
-	listBox->addItem("Quiz 1: Binary Numbers", 2);
-	listBox->addItem("Lesson 2: Floating Point Numbers", 3);
-	listBox->addItem("Quiz 2: Floating Point Numbers", 4);
+	listBox->addItem("Lesson 1: Binary Numbers", 0);
+	listBox->addItem("Quiz 1: Binary Numbers", 1);
+	listBox->addItem("Lesson 2: Floating Point Numbers", 2);
+	listBox->addItem("Quiz 2: Floating Point Numbers", 3);
+
+	listBox->bindCallback(tgui::ListBox::ItemSelected);
+	listBox->setCallbackId(0);
 
 	// Comment this part out, this is just dummy data
 	this->game->firstName = "Bob";
@@ -126,7 +153,7 @@ void MenuState::setupGui() {
 
 
 	// Create the start button
-	tgui::Button::Ptr button1(*gui);
+	tgui::Button::Ptr button1(*gui, "Button");
 	button1->load("TGUI-0.6/widgets/Black.conf");
 	button1->setSize(260, 60);
 	button1->setPosition(this->game->window.getSize().x * (3 / 4.f) - 130, this->game->window.getSize().y - 70);

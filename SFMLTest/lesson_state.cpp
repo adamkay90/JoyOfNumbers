@@ -17,6 +17,12 @@ LessonState::LessonState(Game* game) {
 	face.setPosition(sf::Vector2f(10, this->game->window.getSize().y - face.getTextureRect().height - 10));
 	textBubble.setPosition(sf::Vector2f(face.getPosition().x + face.getTextureRect().width - 10, face.getPosition().y));
 	text.setPosition(textBubble.getPosition().x + 90, textBubble.getPosition().y + 20);
+
+	LessonState::gui = new tgui::Gui(this->game->window);
+	gui->setGlobalFont("media/arial.ttf");
+
+	setupGui();
+
 }
 
 void LessonState::draw(const float dt)
@@ -36,7 +42,7 @@ void LessonState::draw(const float dt)
 
 
 	// Setup the gui and render it on top
-	// gui->draw();
+	gui->draw();
 	return;
 }
 
@@ -70,13 +76,45 @@ void LessonState::handleInput()
 		}
 		case sf::Event::MouseButtonPressed:
 		{
-			dialogID++;
-			break;
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+				dialogID++;
+				break;
+			}
+			else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
+				dialogID--;
+				break;
+			}
 
 		}
 		}
+		gui->handleEvent(event);
+	}
 
+	// Handle the gui callbacks
+	tgui::Callback callback;
+
+	if (gui == nullptr) return;
+	while (gui->pollCallback(callback))
+	{
+		// Make sure tha callback comes from the button
+		if (callback.id == 1)
+		{
+			// For the back button
+			std::cout << "Back button clicked!" << std::endl;
+			this->game->popState();
+		}
 	}
 
 	return;
+}
+
+void LessonState::setupGui() {
+	// Create the log out button
+	tgui::Button::Ptr button2(*gui);
+	button2->load("TGUI-0.6/widgets/Black.conf");
+	button2->setSize(160, 40);
+	button2->setPosition(this->game->window.getSize().x - button2->getSize().x - 10, 10);
+	button2->setText("Back");
+	button2->bindCallback(tgui::Button::LeftMouseClicked);
+	button2->setCallbackId(1);
 }
