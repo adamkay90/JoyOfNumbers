@@ -12,7 +12,7 @@ class MenuState : public GameState
 private:
 
 	sf::View view;
-	void loadQuiz();
+	void setupGui();
 
 public:
 
@@ -20,5 +20,7 @@ public:
 	virtual void update(const float dt);
 	virtual void handleInput();
 
+	tgui::Gui* gui;
 	MenuState(Game* game);
+	~MenuState();
 };
