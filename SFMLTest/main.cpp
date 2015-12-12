@@ -8,6 +8,7 @@
 #include "client_socket.h"
 #include "teacher_state.h"
 #include "menu_state.h"
+#include "lesson_state.h"
 
 int main()
 {
@@ -17,7 +18,7 @@ int main()
 	Game game;
 	
 	//game.pushState(new GameStateLogin(&game));
-	game.pushState(new MenuState(&game));
+	game.pushState(new LessonState(&game));
 	//game.pushState(new QuizState(&game));
 	game.gameLoop();
 	

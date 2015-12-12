@@ -48,6 +48,9 @@
     <ClCompile Include="register_state.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lesson_state.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game_state.h">
@@ -83,6 +86,9 @@
     <ClInclude Include="register_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="lesson_state.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="media\background.png">
@@ -101,6 +107,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="media\next.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="media\text_bubble.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
