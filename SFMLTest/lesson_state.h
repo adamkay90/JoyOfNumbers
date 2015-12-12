@@ -20,6 +20,8 @@ private:
 	sf::Sprite face;
 	sf::Sprite textBubble;
 	sf::Text text;
+	tgui::Gui* gui;
+	void setupGui();
 
 public:
 

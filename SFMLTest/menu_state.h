@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 #include "menu_state.h"
 #include "game_state_editor.h"
@@ -13,6 +14,9 @@ private:
 
 	sf::View view;
 	void setupGui();
+	std::vector<bool> unlockedMenus;
+	void unlockMenu(int menuToUnlock);
+
 
 public:
 
