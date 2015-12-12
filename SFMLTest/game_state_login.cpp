@@ -1,5 +1,7 @@
 #include "game_state_login.h"
-
+#include "client_socket.h"
+#include "teacher_state.h"
+#include "menu_state.h"
 
 void GameStateLogin::draw(const float dt)
 {
@@ -196,8 +198,23 @@ void GameStateLogin::loadMenu()
 }
 
 void GameStateLogin::onLoginButtonClick() {
-	if ()
-	this->game->pushState(new QuizState(this->game));
+	sf::Uint64 return_enum = ClientSocket::login(game->username, game->password); 
+	if (return_enum != sf::Uint64(1)){
+		//TODO: errors
+	}
+	else{
+		game->firstName = client_information::first_name_; 
+		game->lastName = client_information::last_name_;
+		game->isTeacher = client_information::instructor_;
+		if (game->isTeacher){
+			//Go to teacher state
+			this->game->pushState(new TeacherState(this->game));
+		}
+		else{
+			this->game->pushState(new MenuState(this->game));
+		}
+		
+	}
 }
 
 void GameStateLogin::onRegisterButtonClick() {
