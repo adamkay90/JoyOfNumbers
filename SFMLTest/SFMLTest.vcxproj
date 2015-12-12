@@ -16,6 +16,7 @@
     <ClCompile Include="game_state_editor.cpp" />
     <ClCompile Include="game_state_login.cpp" />
     <ClCompile Include="game_state_start.cpp" />
+    <ClCompile Include="lesson_state.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu_state.cpp" />
     <ClCompile Include="quiz_state.cpp" />
@@ -30,6 +31,7 @@
     <ClInclude Include="game_state_editor.h" />
     <ClInclude Include="game_state_login.h" />
     <ClInclude Include="game_state_start.h" />
+    <ClInclude Include="lesson_state.h" />
     <ClInclude Include="menu_state.h" />
     <ClInclude Include="quiz_state.h" />
     <ClInclude Include="register_state.h" />
@@ -42,6 +44,7 @@
     <Image Include="media\next.png" />
     <Image Include="media\one.png" />
     <Image Include="media\Ross_Face.png" />
+    <Image Include="media\text_bubble.png" />
     <Image Include="media\zero.png" />
   </ItemGroup>
   <ItemGroup>

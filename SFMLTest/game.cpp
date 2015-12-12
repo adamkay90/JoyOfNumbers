@@ -46,6 +46,7 @@ void Game::loadTextures()
 	texManager.loadTexture("one", "media/one.png");
 	texManager.loadTexture("zero", "media/zero.png");
 	texManager.loadTexture("next", "media/next.png");
+	texManager.loadTexture("text_bubble", "media/text_bubble.png");
 }
 
 void Game::gameLoop() {
