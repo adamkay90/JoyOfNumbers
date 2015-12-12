@@ -12,6 +12,11 @@ public:
 	static void lesson_progress(sf::Uint64 lesson_id, sf::Uint64 lesson_section);
 	static void quiz_info();
 	static void lesson_info();
+	static void rename_user(std::string user_name, std::string new_first_name, std::string new_last_name);
+	static void remove_user(std::string user_name);
+
+
+
 	static void test(); 
 	
 };

@@ -292,7 +292,70 @@ void ClientSocket::lesson_info(){
 	}
 	socket.disconnect();
 }
+void ClientSocket::rename_user(std::string user_name, std::string new_first_name, std::string new_last_name){
+	sf::TcpSocket socket;
+	sf::Socket::Status status = socket.connect(IP_ADDRESS, PORT);
+	if (status != sf::Socket::Done){
+		std::cerr << "ERROR: Connection to server failed." << std::endl;
+	}
+	std::cout << "Connection made" << std::endl;
 
+
+	sf::Packet send_packet;
+	send_packet << sf::Uint64(8) << user_name<<new_first_name<<new_last_name;
+	if (socket.send(send_packet) != sf::Socket::Done){
+		std::cout << "Sending failed" << std::endl;
+		return;
+	}
+	std::cout << "Sending succeeded" << std::endl;
+	sf::Packet response_packet;
+	if (socket.receive(response_packet) != sf::Socket::Done){
+		std::cout << "Receive Failed" << std::endl;
+	}
+
+	sf::Uint64 receive_enum;
+	response_packet >> receive_enum;
+	if (receive_enum != sf::Uint64(8)){
+		//register failed.
+		std::cerr << "Incorrect ENUM" << std::endl;
+	}
+	else{
+		std::cout << "success rename" << std::endl;
+	}
+	socket.disconnect();
+}
+void ClientSocket::remove_user(std::string user_name){
+	sf::TcpSocket socket;
+	sf::Socket::Status status = socket.connect(IP_ADDRESS, PORT);
+	if (status != sf::Socket::Done){
+		std::cerr << "ERROR: Connection to server failed." << std::endl;
+	}
+	std::cout << "Connection made" << std::endl;
+
+
+	sf::Packet send_packet;
+	send_packet << sf::Uint64(9) << user_name;
+	if (socket.send(send_packet) != sf::Socket::Done){
+		std::cout << "Sending failed" << std::endl;
+		return;
+	}
+	std::cout << "Sending succeeded" << std::endl;
+	sf::Packet response_packet;
+	if (socket.receive(response_packet) != sf::Socket::Done){
+		std::cout << "Receive Failed" << std::endl;
+	}
+
+	sf::Uint64 receive_enum;
+	response_packet >> receive_enum;
+	if (receive_enum != sf::Uint64(9)){
+		//register failed.
+		std::cerr << "Incorrect ENUM" << std::endl;
+	}
+	else{
+		std::cout << "success delete" << std::endl;
+	}
+	socket.disconnect();
+}
 void ClientSocket::test(){
 	std::vector<sf::Uint64> user_id_local;
 	std::vector<std::string> user_names{"user1", "user2", "user3", "user4", "user5"}; 
