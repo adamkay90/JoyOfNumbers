@@ -17,13 +17,15 @@ namespace{
 	static std::vector<sf::Uint64> sections_;
 }
 
-void ClientSocket::login(std::string user_name, std::string password){
+sf::Uint64 ClientSocket::login(std::string user_name, std::string password){
 	
 	//Connect to socket
 	sf::TcpSocket socket;
 	sf::Socket::Status status = socket.connect(IP_ADDRESS, PORT);
 	if (status != sf::Socket::Done){
 		std::cerr << "ERROR: Connection to server failed." << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0); 
 	}
 	std::cout << "Connection made" << std::endl;
 	
@@ -32,12 +34,15 @@ void ClientSocket::login(std::string user_name, std::string password){
 	send_packet << sf::Uint64(1) << user_name << password;
 	if (socket.send(send_packet) != sf::Socket::Done){
 		std::cout << "Sending failed" << std::endl;
-		return;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	std::cout << "Sending succeeded" << std::endl;
 	sf::Packet response_packet;
 	if (socket.receive(response_packet) != sf::Socket::Done){
 		std::cout << "Receive Failed" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 
 	sf::Uint64 receive_enum; 
@@ -45,26 +50,24 @@ void ClientSocket::login(std::string user_name, std::string password){
 	if (receive_enum != sf::Uint64(1)){
 		//register failed.
 		std::cerr << "Incorrect ENUM" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	else{
-		if (user_id_ == 0){
-			//login failed.
-			std::cerr << "Login Failed" << std::endl;
-		}
-		else{
-			response_packet >> first_name_ >> last_name_ >> instructor_;
-			std::cout << user_id_ << " " << first_name_ << " " << last_name_ << " " << instructor_ << std::endl;
-		}
+		response_packet >> first_name_ >> last_name_ >> instructor_;
+		std::cout << user_id_ << " " << first_name_ << " " << last_name_ << " " << instructor_ << std::endl;
+		socket.disconnect();
+		return receive_enum; 
 	}
-	socket.disconnect(); 
 }
-void ClientSocket::register_user(std::string user_name, std::string first_name, std::string last_name, std::string password, bool instructor){
+sf::Uint64 ClientSocket::register_user(std::string user_name, std::string first_name, std::string last_name, std::string password, bool instructor){
 	sf::TcpSocket socket;
 	sf::Socket::Status status = socket.connect(IP_ADDRESS, PORT);
 	if (status != sf::Socket::Done){
 		std::cerr << "ERROR: Connection to server failed." << std::endl; 
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
-	std::cout << "Connection made" << std::endl;
 	
 	user_name_ = user_name;
 	first_name_ = first_name;
@@ -75,13 +78,15 @@ void ClientSocket::register_user(std::string user_name, std::string first_name, 
 	send_packet << sf::Uint64(2) << user_name << first_name << last_name<<password << instructor;
 	if (socket.send(send_packet) != sf::Socket::Done){
 		std::cout << "Sending failed" << std::endl;
-		return;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
-	std::cout << "Sending succeeded" << std::endl;
 	
 	sf::Packet response_packet;
 	if (socket.receive(response_packet) != sf::Socket::Done){
-		std::cout << "Receive Failed" << std::endl;
+		std::cerr << "Receive Failed" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	
 	sf::Uint64 receive_enum;
@@ -90,26 +95,23 @@ void ClientSocket::register_user(std::string user_name, std::string first_name, 
 	if (receive_enum != sf::Uint64(2)){
 		//register failed.
 		std::cerr << "Incorrect ENUM" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	else{
-
-		if (user_id_ == 0){
-			//register failed.
-			std::cerr << "Login Failed" << std::endl;
-		}
-		else{
-			//register succeeded
-			std::cout << user_id_ << std::endl;
-		}
+		std::cout << user_id_ << std::endl;
+		socket.disconnect();
+		return receive_enum; 
 	}
-	socket.disconnect(); 
 }
-void ClientSocket::html(){
+sf::Uint64 ClientSocket::html(){
 	sf::TcpSocket socket;
 	sf::Socket::Status status = socket.connect(IP_ADDRESS, PORT);
 
 	if (status != sf::Socket::Done){
 		std::cerr << "ERROR: Connection to server failed." << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	std::cout << "Connection made" << std::endl;
 
@@ -118,7 +120,8 @@ void ClientSocket::html(){
 	
 	if (socket.send(send_packet) != sf::Socket::Done){
 		std::cout << "Sending failed" << std::endl;
-		return;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	
 	std::cout << "Sending succeeded" << std::endl;
@@ -126,6 +129,8 @@ void ClientSocket::html(){
 	
 	if (socket.receive(response_packet) != sf::Socket::Done){
 		std::cout << "Receive Failed" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	
 	sf::Uint64 receive_enum;
@@ -135,6 +140,8 @@ void ClientSocket::html(){
 	if (receive_enum != sf::Uint64(3)){
 		//register failed.
 		std::cerr << "Incorrect ENUM" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	else{
 		//register succeeded
@@ -145,15 +152,17 @@ void ClientSocket::html(){
 		output_stream.exceptions(std::ofstream::failbit | std::ofstream::badbit);
 
 		output_stream << html_info;
+		socket.disconnect();
+		return receive_enum; 
 	}
-
-	socket.disconnect(); 
 }
-void ClientSocket::quiz_score(sf::Uint64 quiz_id, sf::Uint64 quiz_score){
+sf::Uint64 ClientSocket::quiz_score(sf::Uint64 quiz_id, sf::Uint64 quiz_score){
 	sf::TcpSocket socket;
 	sf::Socket::Status status = socket.connect(IP_ADDRESS, PORT);
 	if (status != sf::Socket::Done){
 		std::cerr << "ERROR: Connection to server failed." << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	std::cout << "Connection made" << std::endl;
 	
@@ -162,28 +171,36 @@ void ClientSocket::quiz_score(sf::Uint64 quiz_id, sf::Uint64 quiz_score){
 	send_packet << sf::Uint64(4) << user_id_ << quiz_id << quiz_score;
 	if (socket.send(send_packet) != sf::Socket::Done){
 		std::cout << "Sending failed" << std::endl;
-		return;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	std::cout << "Sending succeeded" << std::endl;
 	
 	sf::Packet response_packet;
 	if (socket.receive(response_packet) != sf::Socket::Done){
 		std::cout << "Receive Failed" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	sf::Uint64 receive_enum;
 	response_packet >> receive_enum; 
 	if (receive_enum != sf::Uint64(4)){
 		//register failed.
 		std::cerr << "Incorrect ENUM" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
-
+	
 	socket.disconnect();
+	return receive_enum;
 }
-void ClientSocket::lesson_progress(sf::Uint64 lesson_id, sf::Uint64 lesson_section){
+sf::Uint64 ClientSocket::lesson_progress(sf::Uint64 lesson_id, sf::Uint64 lesson_section){
 	sf::TcpSocket socket;
 	sf::Socket::Status status = socket.connect(IP_ADDRESS, PORT);
 	if (status != sf::Socket::Done){
 		std::cerr << "ERROR: Connection to server failed." << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	std::cout << "Connection made" << std::endl;
 	
@@ -191,13 +208,16 @@ void ClientSocket::lesson_progress(sf::Uint64 lesson_id, sf::Uint64 lesson_secti
 	send_packet << sf::Uint64(5) << user_id_ << lesson_id << lesson_section;
 	if (socket.send(send_packet) != sf::Socket::Done){
 		std::cout << "Sending failed" << std::endl;
-		return;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	std::cout << "Sending succeeded" << std::endl;
 	
 	sf::Packet response_packet;
 	if (socket.receive(response_packet) != sf::Socket::Done){
 		std::cout << "Receive Failed" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	
 	sf::Uint64 receive_enum;
@@ -205,40 +225,47 @@ void ClientSocket::lesson_progress(sf::Uint64 lesson_id, sf::Uint64 lesson_secti
 	if (receive_enum != sf::Uint64(5)){
 		//register failed.
 		std::cerr << "Incorrect ENUM" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 
 	socket.disconnect();
+	return receive_enum; 
 }
 /*
  *Using the user_id, returns the number of quiz points
  *for each quiz.
  */
-void ClientSocket::quiz_info(){
+sf::Uint64 ClientSocket::quiz_info(){
 	sf::TcpSocket socket;
 	sf::Socket::Status status = socket.connect(IP_ADDRESS, PORT);
 	if (status != sf::Socket::Done){
 		std::cerr << "ERROR: Connection to server failed." << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
-	std::cout << "Connection made" << std::endl;
-	
 		
 	sf::Packet send_packet;
 	send_packet << sf::Uint64(6) << user_id_;
 	if (socket.send(send_packet) != sf::Socket::Done){
 		std::cout << "Sending failed" << std::endl;
-		return;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
-	std::cout << "Sending succeeded" << std::endl;
 	
 	sf::Packet response_packet;
 	if (socket.receive(response_packet) != sf::Socket::Done){
 		std::cout << "Receive Failed" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	sf::Uint64 receive_enum;
 	response_packet >> receive_enum; 
 	if (receive_enum != sf::Uint64(6)){
 		//register failed.
 		std::cerr << "Incorrect ENUM" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	else{
 		sf::Uint64 quiz;
@@ -249,31 +276,34 @@ void ClientSocket::quiz_info(){
 		}
 	}
 	socket.disconnect();
-	
+	return receive_enum; 
 }
 /*
  *Using the user_id, returns the number of sections that have been completed
  *for each lesson (assumed 10 right now)
  */
-void ClientSocket::lesson_info(){
+sf::Uint64 ClientSocket::lesson_info(){
 	sf::TcpSocket socket;
 	sf::Socket::Status status = socket.connect(IP_ADDRESS, PORT);
 	if (status != sf::Socket::Done){
 		std::cerr << "ERROR: Connection to server failed." << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
-	std::cout << "Connection made" << std::endl;
-	
 	
 	sf::Packet send_packet;
 	send_packet << sf::Uint64(7) << user_id_;
 	if (socket.send(send_packet) != sf::Socket::Done){
 		std::cout << "Sending failed" << std::endl;
-		return;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	std::cout << "Sending succeeded" << std::endl;
 	sf::Packet response_packet;
 	if (socket.receive(response_packet) != sf::Socket::Done){
 		std::cout << "Receive Failed" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	
 	sf::Uint64 receive_enum;
@@ -281,6 +311,8 @@ void ClientSocket::lesson_info(){
 	if (receive_enum != sf::Uint64(7)){
 		//register failed.
 		std::cerr << "Incorrect ENUM" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	else{
 		sf::Uint64 lesson_section;
@@ -291,26 +323,30 @@ void ClientSocket::lesson_info(){
 		}
 	}
 	socket.disconnect();
+	return receive_enum; 
 }
-void ClientSocket::rename_user(std::string user_name, std::string new_first_name, std::string new_last_name){
+sf::Uint64 ClientSocket::rename_user(std::string user_name, std::string new_first_name, std::string new_last_name){
 	sf::TcpSocket socket;
 	sf::Socket::Status status = socket.connect(IP_ADDRESS, PORT);
 	if (status != sf::Socket::Done){
 		std::cerr << "ERROR: Connection to server failed." << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
-	std::cout << "Connection made" << std::endl;
-
 
 	sf::Packet send_packet;
 	send_packet << sf::Uint64(8) << user_name<<new_first_name<<new_last_name;
 	if (socket.send(send_packet) != sf::Socket::Done){
 		std::cout << "Sending failed" << std::endl;
-		return;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	std::cout << "Sending succeeded" << std::endl;
 	sf::Packet response_packet;
 	if (socket.receive(response_packet) != sf::Socket::Done){
 		std::cout << "Receive Failed" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 
 	sf::Uint64 receive_enum;
@@ -318,31 +354,36 @@ void ClientSocket::rename_user(std::string user_name, std::string new_first_name
 	if (receive_enum != sf::Uint64(8)){
 		//register failed.
 		std::cerr << "Incorrect ENUM" << std::endl;
-	}
-	else{
-		std::cout << "success rename" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	socket.disconnect();
+	return receive_enum; 
 }
-void ClientSocket::remove_user(std::string user_name){
+sf::Uint64 ClientSocket::remove_user(std::string user_name){
 	sf::TcpSocket socket;
 	sf::Socket::Status status = socket.connect(IP_ADDRESS, PORT);
 	if (status != sf::Socket::Done){
 		std::cerr << "ERROR: Connection to server failed." << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
-	std::cout << "Connection made" << std::endl;
+	
 
 
 	sf::Packet send_packet;
 	send_packet << sf::Uint64(9) << user_name;
 	if (socket.send(send_packet) != sf::Socket::Done){
 		std::cout << "Sending failed" << std::endl;
-		return;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	std::cout << "Sending succeeded" << std::endl;
 	sf::Packet response_packet;
 	if (socket.receive(response_packet) != sf::Socket::Done){
 		std::cout << "Receive Failed" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 
 	sf::Uint64 receive_enum;
@@ -350,31 +391,34 @@ void ClientSocket::remove_user(std::string user_name){
 	if (receive_enum != sf::Uint64(9)){
 		//register failed.
 		std::cerr << "Incorrect ENUM" << std::endl;
-	}
-	else{
-		std::cout << "success delete" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 	socket.disconnect();
+	return receive_enum; 
 }
-void ClientSocket::add_user(std::string user_name, std::string first_name, std::string last_name, std::string password, bool instructor){
+sf::Uint64 ClientSocket::add_user(std::string user_name, std::string first_name, std::string last_name, std::string password, bool instructor){
 	sf::TcpSocket socket;
 	sf::Socket::Status status = socket.connect(IP_ADDRESS, PORT);
 	if (status != sf::Socket::Done){
 		std::cerr << "ERROR: Connection to server failed." << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
-	std::cout << "Connection made" << std::endl;
 
 	sf::Packet send_packet;
 	send_packet << sf::Uint64(2) << user_name << first_name << last_name << password << instructor;
 	if (socket.send(send_packet) != sf::Socket::Done){
 		std::cout << "Sending failed" << std::endl;
-		return;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
-	std::cout << "Sending succeeded" << std::endl;
 
 	sf::Packet response_packet;
 	if (socket.receive(response_packet) != sf::Socket::Done){
 		std::cout << "Receive Failed" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 
 	sf::Uint64 receive_enum;
@@ -383,9 +427,12 @@ void ClientSocket::add_user(std::string user_name, std::string first_name, std::
 	if (receive_enum != sf::Uint64(2)){
 		//register failed.
 		std::cerr << "Incorrect ENUM" << std::endl;
+		socket.disconnect();
+		return sf::Uint64(0);
 	}
 
 	socket.disconnect();
+	return receive_enum; 
 }
 void ClientSocket::test(){
 	std::vector<sf::Uint64> user_id_local;

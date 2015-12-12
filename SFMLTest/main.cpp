@@ -13,7 +13,7 @@
 int main()
 {
 	
-	ClientSocket::test();
+	//ClientSocket::test();
 
 	Game game;
 	

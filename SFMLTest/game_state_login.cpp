@@ -196,6 +196,7 @@ void GameStateLogin::loadMenu()
 }
 
 void GameStateLogin::onLoginButtonClick() {
+	if ()
 	this->game->pushState(new QuizState(this->game));
 }
 
