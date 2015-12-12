@@ -14,10 +14,8 @@ public:
 	static void lesson_info();
 	static void rename_user(std::string user_name, std::string new_first_name, std::string new_last_name);
 	static void remove_user(std::string user_name);
-
-
+	static void add_user(std::string user_name, std::string first_name, std::string last_name, std::string password, bool instructor);
 
 	static void test(); 
-	
 };
 

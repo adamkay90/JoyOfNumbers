@@ -13,8 +13,8 @@
 int main()
 {
 	
-	//ClientSocket::test();
-	
+	ClientSocket::test();
+
 	Game game;
 	
 	//game.pushState(new GameStateLogin(&game));

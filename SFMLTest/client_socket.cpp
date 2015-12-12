@@ -6,7 +6,7 @@
 #include "client_socket.h"
 //TODO use actual number of lessons for quiz info and lesson info
 namespace{
-	static const char* const IP_ADDRESS = "155.99.173.115";
+	static const char* const IP_ADDRESS = "155.99.175.104";
 	static const int PORT = 55555; 
 	static sf::Uint64 user_id_ = 0;
 	static std::string user_name_; 
@@ -356,6 +356,37 @@ void ClientSocket::remove_user(std::string user_name){
 	}
 	socket.disconnect();
 }
+void ClientSocket::add_user(std::string user_name, std::string first_name, std::string last_name, std::string password, bool instructor){
+	sf::TcpSocket socket;
+	sf::Socket::Status status = socket.connect(IP_ADDRESS, PORT);
+	if (status != sf::Socket::Done){
+		std::cerr << "ERROR: Connection to server failed." << std::endl;
+	}
+	std::cout << "Connection made" << std::endl;
+
+	sf::Packet send_packet;
+	send_packet << sf::Uint64(2) << user_name << first_name << last_name << password << instructor;
+	if (socket.send(send_packet) != sf::Socket::Done){
+		std::cout << "Sending failed" << std::endl;
+		return;
+	}
+	std::cout << "Sending succeeded" << std::endl;
+
+	sf::Packet response_packet;
+	if (socket.receive(response_packet) != sf::Socket::Done){
+		std::cout << "Receive Failed" << std::endl;
+	}
+
+	sf::Uint64 receive_enum;
+	response_packet >> receive_enum;
+
+	if (receive_enum != sf::Uint64(2)){
+		//register failed.
+		std::cerr << "Incorrect ENUM" << std::endl;
+	}
+
+	socket.disconnect();
+}
 void ClientSocket::test(){
 	std::vector<sf::Uint64> user_id_local;
 	std::vector<std::string> user_names{"user1", "user2", "user3", "user4", "user5"}; 
@@ -409,9 +440,7 @@ void ClientSocket::test(){
 			quiz_score(sf::Uint64(j), sf::Uint64(1));
 		}
 	}
-
-	register_user("DROP TABLE USERS;", "blah", "lolz", "test", true); 
-	register_user("SELECT * FROM USERS;", "trial1", "trial2", "password", true); 
+	
 	/*for (int i = 0; i < 5; i++){
 		user_id_ = user_id_local[i];
 		user_name_ = user_names[i];
@@ -424,4 +453,5 @@ void ClientSocket::test(){
 	lesson_info();*/
 
 	html();
+	add_user("user6", "Ellyx", "Jolley", "password", false); 
 }
