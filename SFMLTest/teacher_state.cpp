@@ -1,7 +1,7 @@
 #include "teacher_state.h"
 #include <iostream>
-
-
+#include "client_socket.h"
+#include "error_state.h"
 
 void TeacherState::draw(const float dt)
 {
@@ -39,8 +39,25 @@ void TeacherState::on_submit_click(){
 		tgui::EditBox::Ptr password = static_cast<tgui::EditBox::Ptr>(gui->get("password"));
 
 		tgui::Checkbox::Ptr inst = static_cast<tgui::Checkbox::Ptr>(gui->get("instructor"));
+		if (user_name->getText().isEmpty()|| first_name->getText().isEmpty() || last_name->getText().isEmpty() ||password->getText().isEmpty()){
 
+			tgui::Label::Ptr output = static_cast<tgui::Label::Ptr>(gui->get("output_label"));
+			output->setText("no blank fields allowed");
+			return;
+		}
+		if (ClientSocket::register_user(user_name->getText(), first_name->getText(), last_name->getText(), password->getText(), inst->isChecked()) != 0){
+			//success
+			tgui::Label::Ptr output = static_cast<tgui::Label::Ptr>(gui->get("output_label"));
+			output->setText("user succesfully registered");
+			return;
+		}
+		else{
+			//fail
+			this->game->pushState(new ErrorState(this->game, "registration failed"));
+			return;
+		}
 		//html call using this stuff
+
 	}
 	else if ((static_cast<tgui::RadioButton::Ptr>(gui->get("radio_remove")))->Checked){
 		tgui::EditBox::Ptr user_name = static_cast<tgui::EditBox::Ptr>(gui->get("username"));
@@ -320,6 +337,10 @@ void TeacherState::SetupGui() {
 	rename_label->setSize(150, 40);
 	rename_label->setPosition(30, this->game->window.getSize().y - 190);
 	rename_label->setText("Rename");
+
+	tgui::Label::Ptr output_label(*gui, "output_label");
+	output_label->setSize(800, 40);
+	output_label->setPosition(30, this->game->window.getSize().y - 140);
 }
 TeacherState::TeacherState(Game* game)
 {

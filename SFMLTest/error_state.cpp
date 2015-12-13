@@ -97,10 +97,18 @@ void ErrorState::handleInput()
 		if (callback.id == 1)
 		{
 			return_state();
+			//this->game->poppedState = true;
+			//this->game->popState();
+			return;
 		}
 	}
 
 	return;
+}
+
+void ErrorState::return_state(){
+	this->game->poppedState = true;
+	this->game->popState();
 }
 
 ErrorState::ErrorState(Game* game, std::string error_message)
@@ -121,11 +129,7 @@ ErrorState::ErrorState(Game* game, std::string error_message)
 	logo1.setPosition(this->game->window.getSize().x / 2, 150);
 	
 	*/
-	if (!background.openFromFile("media/Interlude.ogg")) {
-
-	}
-	background.play();
-	background.setLoop(true);
+	
 	face.setTexture(this->game->texManager.getRef("Ross_Face"));
 	face.setScale(sf::Vector2f(0.5, 0.5));
 	face.setOrigin(face.getTextureRect().width / 2, face.getTextureRect().height / 2);
@@ -185,9 +189,6 @@ void ErrorState::CreateGround(b2World& World, float X, float Y)
 }
 
 
-void ErrorState::return_state(){
-	this->game->popState();
-}
 
 void ErrorState::SetupGui(std::string error_message) {
 
