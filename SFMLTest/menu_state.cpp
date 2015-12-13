@@ -79,16 +79,21 @@ void MenuState::handleInput()
 
 			// This is where it'll load either a lesson state or a quiz state
 			switch (id) {
+			case 0:
+				//Natural Numbers
+				std::cout << "HERE"<< std::endl;
+				break;
+
 			case 1:
+				//Integers
 				break;
 
 			case 2:
+				//Binary
 				break;
 
 			case 3:
-				break;
-
-			case 4:
+				//Quiz
 				break;
 			}
 		}
@@ -117,7 +122,6 @@ MenuState::MenuState(Game* game)
 
 	unlockedMenus.resize(10);
 	unlockedMenus.at(0) = true;
-
 }
 
 
@@ -127,17 +131,13 @@ void MenuState::setupGui() {
 	listBox->setSize(800, 600);
 	listBox->setItemHeight(50);
 	listBox->setPosition(240, 50);
-	listBox->addItem("Lesson 1: Binary Numbers", 0);
-	listBox->addItem("Quiz 1: Binary Numbers", 1);
-	listBox->addItem("Lesson 2: Floating Point Numbers", 2);
-	listBox->addItem("Quiz 2: Floating Point Numbers", 3);
+	listBox->addItem("Lesson 1: Natural Numbers", 0);
+	listBox->addItem("Lesson 2: Integers", 1);
+	listBox->addItem("Lesson 3: Binary", 2);
+	listBox->addItem("Quiz", 3);
 
 	listBox->bindCallback(tgui::ListBox::ItemSelected);
 	listBox->setCallbackId(0);
-
-	// Comment this part out, this is just dummy data
-	this->game->firstName = "Bob";
-	this->game->lastName = "Ross";
 
 	// Create the first name label
 	tgui::Label::Ptr labelFirstName(*gui);
