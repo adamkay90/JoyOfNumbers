@@ -10,6 +10,7 @@
 #include "register_state.h"
 #include "quiz_state.h"
 #include "animation_handler.h"
+#include "lesson_data.h"
 
 class LessonState : public GameState
 {
@@ -28,6 +29,8 @@ private:
 	std::vector<std::string> dialog;
 
 	AnimationHandler faceAniHandler;
+
+	LessonData lessonData;
 
 public:
 

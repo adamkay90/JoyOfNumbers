@@ -1,5 +1,7 @@
 #include "lesson_state.h"
 
+#include "lesson_natural_numbers.h"
+
 LessonState::LessonState(Game* game) {
 	this->game = game;
 	sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
@@ -23,10 +25,15 @@ LessonState::LessonState(Game* game) {
 	gui->setGlobalFont("media/arial.ttf");
 
 	setupGui();
+	dialogID = 0;
 
 	faceAniHandler.frameSize = sf::IntRect(0, 0, 280, 304);
 	faceAniHandler.addAnim(Animation(0, 3, 0.1f));
 	faceAniHandler.update(0.0f);
+
+	// lessonData = LessonNaturalNumbers(text);
+
+	text.setString(lessonData.getDialog(dialogID));
 }
 
 void LessonState::draw(const float dt)
@@ -56,13 +63,17 @@ void LessonState::draw(const float dt)
 
 	// Setup the gui and render it on top
 	gui->draw();
+
+	// Render anything special in the LessonData
+	// lessonData.draw(dt);
 	return;
 }
 
 
 void LessonState::update(const float dt)
 {
-
+	// Update anything special in the lessonData
+	// lessonData.update(dt);
 }
 
 void LessonState::handleInput()
@@ -131,23 +142,18 @@ void LessonState::setupGui() {
 	button2->bindCallback(tgui::Button::LeftMouseClicked);
 	button2->setCallbackId(1);
 
-	tgui::TextBox::Ptr textBox(*gui, "Text");
-	textBox->setPosition(textBubble.getPosition().x + 90, textBubble.getPosition().y + 20);
-	textBox->setSize(900, 260);
-	textBox->setBorderColor(sf::Color::White);
-	textBox->setBackgroundColor(sf::Color::White);
-	textBox->setReadOnly();
-	textBox->setText("Hello, my name is Mr. Burns. I believe you have a letter for me. Okay, Mr. Burns, what's your first name? I don't know. Great plan, Bart.");
 }
 
 void LessonState::nextDialog() {
-	dialogID++;
-	text.setString(dialog.at(dialogID));
+	if (dialogID < lessonData.getDialogCount()) {
+		dialogID++;
+		text.setString(lessonData.getDialog(dialogID));
+	}
 }
 
 void LessonState::previousDialog() {
 	if (dialogID > 0) {
 		dialogID--;
-		text.setString(dialog.at(dialogID));
+		text.setString(lessonData.getDialog(dialogID));
 	}
 }

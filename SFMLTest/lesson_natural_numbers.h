@@ -1,34 +1,12 @@
 #pragma once
 
-#include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <TGUI\TGUI.hpp>
-#include <iostream>
+#include "TGUI\TGUI.hpp"
+#include "lesson_data.h"
 
-#include "game_state.h"
-#include "register_state.h"
-#include "quiz_state.h"
-#include "animation_handler.h"
 
-class LessonNaturalNumbers : public GameState
+class LessonNaturalNumbers : public LessonData
 {
 private:
-
-	sf::View view;
-
-	int dialogID;
-	sf::Sprite face;
-	sf::Sprite textBubble;
-	sf::Text text;
-	tgui::Gui* gui;
-	void setupGui();
-	void nextDialog();
-	void previousDialog();
-	std::vector<std::string> dialog;
-
-	AnimationHandler faceAniHandler;
-
 
 public:
 
@@ -36,6 +14,6 @@ public:
 	virtual void update(const float dt);
 	virtual void handleInput();
 
-	LessonNaturalNumbers(Game* game);
+	LessonNaturalNumbers(sf::Text text);
 	~LessonNaturalNumbers();
 };
