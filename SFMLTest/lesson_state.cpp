@@ -30,23 +30,23 @@ LessonState::LessonState(Game* game) {
 	faceAniHandler.update(0.0f);
 
 		dialog.push_back("Lesson 1: Natural Numbers");
-		dialog.push_back("Hi, and welcome to the Joy of Numbers. I’m your host, Bob Ross. \nI’m so glad you could join me today to learn about one of life’s most fascinating topics.");
-		dialog.push_back("Today, we’re going to talk about natural numbers. You probably\nknow a lot about natural numbers already, and you don’t even know it yet.");
-		dialog.push_back("Let’s get started, shall we?");
-		dialog.push_back("Natural numbers are, to put it simply, numbers you can count on your fingers and toes. \nOne, two, three, those are all natural numbers.");
-		dialog.push_back("Of course, we can’t forget little old zero! That’s a natural number too.");
-		dialog.push_back("Every natural number is followed by another natural number. 1 is followed by 2, 100 is followed by 101. This goes on and on.");
-		dialog.push_back("Since zero is the smallest of the natural numbers, it doesn’t follow any other natural number. It’s at the front of the line.");
-		dialog.push_back("If we have two natural numbers, but we don’t know anything about them except that they are the followed by the same number, then we can conclude that they’re the same natural number.");
+		dialog.push_back("Hi, and welcome to the Joy of Numbers. I'm your host, Bob Ross. \nI'm so glad you could join me today to learn about one of life's most\nfascinating topics.");
+		dialog.push_back("Today, we're going to talk about natural numbers. You probably\nknow a lot about natural numbers already, and you don't even know it yet.");
+		dialog.push_back("Let's get started, shall we?");
+		dialog.push_back("Natural numbers are, to put it simply, numbers you can count on your\nfingers and toes. One, two, three, those are all natural numbers.");
+		dialog.push_back("Of course, we can't forget little old zero! That's a natural number too.");
+		dialog.push_back("Every natural number is followed by another natural number. 1 is\nfollowed by 2, 100 is followed by 101. This goes on and on.");
+		dialog.push_back("Since zero is the smallest of the natural numbers, it doesn't \nfollow any other natural number. It's at the front of the line.");
+		dialog.push_back("If we have two natural numbers, but we don't know anything about\nthem except that they are the followed by the same number, then\nwe can conclude that they're the same natural number.");
 		dialog.push_back("It sounds a bit more complicated then it actually is, haha.");
-		dialog.push_back("If we have any group of natural numbers together, then we also know that the group has a smallest natural number.");
-		dialog.push_back("For example, if we have a set with the numbers 5, 9, and 12 in it, then we know 5 is the smallest number.");
-		dialog.push_back("You might be thinking, /“Bob, if sets always have a smallest number, then surely they also have a largest number too!/”");
-		dialog.push_back("But a set can have an infinite amount of natural numbers in it, and you can’t have a biggest number from an infinite amount of numbers.");
-		dialog.push_back("Now maybe you’re thinking, /“Shucks, Bob, you got me. But why do I need to know this stuff anyway?/” Well, that’s cause it’s an important rule of natural numbers.");
-		dialog.push_back("Mathematicians need all sorts of rules about numbers to be able to do stuff with them, even if they sound obvious to us.");
-		dialog.push_back("If we didn’t have those rules, we would have never been able to get to the moon and see the Earth in all its glory.");
-		dialog.push_back("Oh, but I’m rambling again. I hope you enjoyed learning about natural numbers, and I hope I see you again soon in the next lesson.");
+		dialog.push_back("If we have any group of natural numbers together, then we also\nknow that the group has a smallest natural number.");
+		dialog.push_back("For example, if we have a set with the numbers 5, 9, and 12 in\nit, then we know 5 is the smallest number.");
+		dialog.push_back("You might be thinking, \"Bob, if sets always have a smallest\nnumber, then surely they also have a largest number too!\"");
+		dialog.push_back("But a set can have an infinite amount of natural numbers in it,\nand you can't have a biggest number from an infinite amount of numbers.");
+		dialog.push_back("Now maybe you're thinking, \"Shucks, Bob, you got me. But why do\nI need to know this stuff anyway?\" Well, that's cause it's an important\nrule of natural numbers.");
+		dialog.push_back("Mathematicians need all sorts of rules about numbers to be able\nto do stuff with them, even if they sound obvious to us.");
+		dialog.push_back("If we didn't have those rules, we would have never been able to\nget to the moon and see the Earth in all its glory.");
+		dialog.push_back("Oh, but I'm rambling again. I hope you enjoyed learning about\nnatural numbers, and I hope I see you again soon in the next lesson.");
 
 	text.setString(dialog.at(dialogID));
 }
@@ -116,16 +116,15 @@ void LessonState::handleInput()
 		case sf::Event::MouseButtonPressed:
 		{
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-				if (dialogID < 17) {
+
 					nextDialog();
 					break;
-				}
+				
 			}
 			else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
-				if (dialogID > 0) {
+
 					previousDialog();
 					break;
-				}
 			}
 
 		}
@@ -164,17 +163,16 @@ void LessonState::setupGui() {
 }
 
 void LessonState::nextDialog() {
-
+	dialogID++;
 	if (dialogID < dialog.size()) {
-		dialogID++;
 		text.setString(dialog.at(dialogID));
 	}
 
 }
 
 void LessonState::previousDialog() {
+	dialogID--;
 	if (dialogID > 0) {
-		dialogID--;
 		text.setString(dialog.at(dialogID));
 	}
 }
