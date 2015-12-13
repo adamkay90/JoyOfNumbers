@@ -29,8 +29,7 @@ sf::Uint64 ClientSocket::login(std::string user_name, std::string password){
 		socket.disconnect();
 		return sf::Uint64(0); 
 	}
-	std::cout << "Connection made" << std::endl;
-	
+
 	client_information::user_name_ = user_name;
 	sf::Packet send_packet;
 	send_packet << sf::Uint64(1) << user_name << password;
@@ -39,7 +38,7 @@ sf::Uint64 ClientSocket::login(std::string user_name, std::string password){
 		socket.disconnect();
 		return sf::Uint64(0);
 	}
-	std::cout << "Sending succeeded" << std::endl;
+	
 	sf::Packet response_packet;
 	if (socket.receive(response_packet) != sf::Socket::Done){
 		std::cout << "Receive Failed" << std::endl;
@@ -57,7 +56,6 @@ sf::Uint64 ClientSocket::login(std::string user_name, std::string password){
 	}
 	else{
 		response_packet >> client_information::first_name_ >> client_information::last_name_ >> client_information::instructor_;
-		std::cout << client_information::user_id_ << " " << client_information::first_name_ << " " << client_information::last_name_ << " " << client_information::instructor_ << std::endl;
 		socket.disconnect();
 		return receive_enum; 
 	}
@@ -101,7 +99,6 @@ sf::Uint64 ClientSocket::register_user(std::string user_name, std::string first_
 		return sf::Uint64(0);
 	}
 	else{
-		std::cout << client_information::user_id_ << std::endl;
 		socket.disconnect();
 		return receive_enum; 
 	}
@@ -117,8 +114,7 @@ sf::Uint64 ClientSocket::html(){
 	}
 
 	sf::Packet send_packet;
-	send_packet << sf::Uint64(3);;
-	
+	send_packet << sf::Uint64(3);
 	if (socket.send(send_packet) != sf::Socket::Done){
 		std::cout << "Sending failed" << std::endl;
 		socket.disconnect();
@@ -126,7 +122,6 @@ sf::Uint64 ClientSocket::html(){
 	}
 
 	sf::Packet response_packet;
-	
 	if (socket.receive(response_packet) != sf::Socket::Done){
 		std::cout << "Receive Failed" << std::endl;
 		socket.disconnect();
@@ -136,7 +131,6 @@ sf::Uint64 ClientSocket::html(){
 	sf::Uint64 receive_enum;
 	std::string html_info; 
 	response_packet >> receive_enum;
-	
 	if (receive_enum != sf::Uint64(3)){
 		//register failed.
 		std::cerr << "Incorrect ENUM" << std::endl;
@@ -147,7 +141,6 @@ sf::Uint64 ClientSocket::html(){
 		//register succeeded
 
 		response_packet >> html_info;
-		std::cout << html_info << std::endl;
 		std::ofstream output_stream("PROGRESS_REPORT.html", std::ios::out | std::ios::binary);
 		output_stream.exceptions(std::ofstream::failbit | std::ofstream::badbit);
 
@@ -166,7 +159,6 @@ sf::Uint64 ClientSocket::quiz_score(sf::Uint64 quiz_id, sf::Uint64 quiz_score){
 	}
 
 	sf::Packet send_packet;
-
 	send_packet << sf::Uint64(4) << client_information::user_id_ << quiz_id << quiz_score;
 	if (socket.send(send_packet) != sf::Socket::Done){
 		std::cout << "Sending failed" << std::endl;
@@ -180,6 +172,7 @@ sf::Uint64 ClientSocket::quiz_score(sf::Uint64 quiz_id, sf::Uint64 quiz_score){
 		socket.disconnect();
 		return sf::Uint64(0);
 	}
+
 	sf::Uint64 receive_enum;
 	response_packet >> receive_enum; 
 	if (receive_enum != sf::Uint64(4)){
@@ -200,8 +193,7 @@ sf::Uint64 ClientSocket::lesson_progress(sf::Uint64 lesson_id, sf::Uint64 lesson
 		socket.disconnect();
 		return sf::Uint64(0);
 	}
-	std::cout << "Connection made" << std::endl;
-	
+
 	sf::Packet send_packet;
 	send_packet << sf::Uint64(5) << client_information::user_id_ << lesson_id << lesson_section;
 	if (socket.send(send_packet) != sf::Socket::Done){
@@ -209,7 +201,6 @@ sf::Uint64 ClientSocket::lesson_progress(sf::Uint64 lesson_id, sf::Uint64 lesson
 		socket.disconnect();
 		return sf::Uint64(0);
 	}
-	std::cout << "Sending succeeded" << std::endl;
 	
 	sf::Packet response_packet;
 	if (socket.receive(response_packet) != sf::Socket::Done){
@@ -270,7 +261,6 @@ sf::Uint64 ClientSocket::quiz_info(){
 		for (std::vector<std::vector<std::string>>::size_type i{ 0 }; i < 5; ++i){
 			response_packet >> quiz;//TODO use actual number of lessons for quiz info and lesson info
 			client_information::quizzes_.emplace_back(quiz);
-			std::cout << quiz << std::endl;
 		}
 	}
 	socket.disconnect();
@@ -296,7 +286,7 @@ sf::Uint64 ClientSocket::lesson_info(){
 		socket.disconnect();
 		return sf::Uint64(0);
 	}
-	std::cout << "Sending succeeded" << std::endl;
+	
 	sf::Packet response_packet;
 	if (socket.receive(response_packet) != sf::Socket::Done){
 		std::cout << "Receive Failed" << std::endl;
@@ -317,7 +307,6 @@ sf::Uint64 ClientSocket::lesson_info(){
 		for (std::vector<std::vector<std::string>>::size_type i{ 0 }; i < 4; ++i){
 			response_packet >> lesson_section;//TODO use actual number of lessons for quiz info and lesson info
 			client_information::sections_.emplace_back(lesson_section);
-			std::cout << client_information::sections_[i] << std::endl;
 		}
 	}
 	socket.disconnect();
@@ -339,7 +328,7 @@ sf::Uint64 ClientSocket::rename_user(std::string user_name, std::string new_firs
 		socket.disconnect();
 		return sf::Uint64(0);
 	}
-	std::cout << "Sending succeeded" << std::endl;
+	
 	sf::Packet response_packet;
 	if (socket.receive(response_packet) != sf::Socket::Done){
 		std::cout << "Receive Failed" << std::endl;
@@ -367,8 +356,6 @@ sf::Uint64 ClientSocket::remove_user(std::string user_name){
 		return sf::Uint64(0);
 	}
 	
-
-
 	sf::Packet send_packet;
 	send_packet << sf::Uint64(9) << user_name;
 	if (socket.send(send_packet) != sf::Socket::Done){
@@ -376,7 +363,7 @@ sf::Uint64 ClientSocket::remove_user(std::string user_name){
 		socket.disconnect();
 		return sf::Uint64(0);
 	}
-	std::cout << "Sending succeeded" << std::endl;
+	
 	sf::Packet response_packet;
 	if (socket.receive(response_packet) != sf::Socket::Done){
 		std::cout << "Receive Failed" << std::endl;

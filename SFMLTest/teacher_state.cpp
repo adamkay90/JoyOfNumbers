@@ -24,6 +24,15 @@ void TeacherState::update(const float dt)
 
 void TeacherState::on_ross_click(){
 	//needs to be an html call
+	if (ClientSocket::html() != 0){
+		tgui::Label::Ptr output = static_cast<tgui::Label::Ptr>(gui->get("output_label"));
+		output->setText("HTML created successfully");
+	}
+	else{
+		//fail
+		this->game->pushState(new ErrorState(this->game, "HTML failed"));
+		return;
+	}
 	tgui::Picture::Ptr picture = static_cast<tgui::Picture::Ptr>(gui->get("ross"));
 	picture->load("TGUI-0.6/widgets/potato.jpg");
 	picture->setSize(497, 541);
@@ -44,18 +53,18 @@ void TeacherState::on_submit_click(){
 		if (user_name->getText().isEmpty()|| first_name->getText().isEmpty() || last_name->getText().isEmpty() ||password->getText().isEmpty()){
 
 			tgui::Label::Ptr output = static_cast<tgui::Label::Ptr>(gui->get("output_label"));
-			output->setText("no blank fields allowed");
+			output->setText("No blank fields allowed");
 			return;
 		}
 		if (ClientSocket::add_user(user_name->getText(), first_name->getText(), last_name->getText(), password->getText(), inst->isChecked()) != 0){
 			//success
 			tgui::Label::Ptr output = static_cast<tgui::Label::Ptr>(gui->get("output_label"));
-			output->setText("user succesfully registered");
+			output->setText("User succesfully registered");
 			return;
 		}
 		else{
 			//fail
-			this->game->pushState(new ErrorState(this->game, "registration failed"));
+			this->game->pushState(new ErrorState(this->game, "Registration failed"));
 			return;
 		}
 		
@@ -66,18 +75,18 @@ void TeacherState::on_submit_click(){
 		
 		if (user_name->getText().isEmpty()){
 			tgui::Label::Ptr output = static_cast<tgui::Label::Ptr>(gui->get("output_label"));
-			output->setText("no blank fields allowed");
+			output->setText("No blank fields allowed");
 			return;
 		}
 		if (ClientSocket::remove_user(user_name->getText()) != 0){
 			//success
 			tgui::Label::Ptr output = static_cast<tgui::Label::Ptr>(gui->get("output_label"));
-			output->setText("user succesfully deleted");
+			output->setText("User succesfully deleted");
 			return;
 		}
 		else{
 			//fail
-			this->game->pushState(new ErrorState(this->game, "deletion failed"));
+			this->game->pushState(new ErrorState(this->game, "Deletion failed"));
 			return;
 		}
 	}
@@ -87,7 +96,23 @@ void TeacherState::on_submit_click(){
 		tgui::EditBox::Ptr first_name = static_cast<tgui::EditBox::Ptr>(gui->get("firstname"));
 
 		tgui::EditBox::Ptr last_name = static_cast<tgui::EditBox::Ptr>(gui->get("lastname"));
-		//html call using this
+		
+		if (user_name->getText().isEmpty() || first_name->getText().isEmpty() || last_name->getText().isEmpty()){
+			tgui::Label::Ptr output = static_cast<tgui::Label::Ptr>(gui->get("output_label"));
+			output->setText("No blank fields allowed");
+			return;
+		}
+		if (ClientSocket::rename_user(user_name->getText(), first_name->getText(), last_name->getText()) != 0){
+			//success
+			tgui::Label::Ptr output = static_cast<tgui::Label::Ptr>(gui->get("output_label"));
+			output->setText("Updated first and last name successfully");
+			return;
+		}
+		else{
+			//fail
+			this->game->pushState(new ErrorState(this->game, "Update failed"));
+			return;
+		}
 	}
 	else{
 		//dafuq?
