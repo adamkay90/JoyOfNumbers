@@ -33,7 +33,7 @@ LessonState::LessonState(Game* game) {
 
 	// lessonData = LessonNaturalNumbers(text);
 
-	text.setString(lessonData.getDialog(dialogID));
+	// text.setString(lessonData.getDialog(dialogID));
 }
 
 void LessonState::draw(const float dt)
@@ -145,15 +145,9 @@ void LessonState::setupGui() {
 }
 
 void LessonState::nextDialog() {
-	if (dialogID < lessonData.getDialogCount()) {
-		dialogID++;
-		text.setString(lessonData.getDialog(dialogID));
-	}
+	
 }
 
 void LessonState::previousDialog() {
-	if (dialogID > 0) {
-		dialogID--;
-		text.setString(lessonData.getDialog(dialogID));
-	}
+	
 }

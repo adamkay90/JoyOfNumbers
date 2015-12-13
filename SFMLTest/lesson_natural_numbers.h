@@ -7,6 +7,8 @@
 class LessonNaturalNumbers : public LessonData
 {
 private:
+	sf::Text text;
+	std::vector<std::vector<std::string>> dialog;
 
 public:
 
@@ -16,4 +18,8 @@ public:
 
 	LessonNaturalNumbers(sf::Text text);
 	~LessonNaturalNumbers();
+
+	virtual void getDialog();
+	virtual void getDialogCount();
+
 };

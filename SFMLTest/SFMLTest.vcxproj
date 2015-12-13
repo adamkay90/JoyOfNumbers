@@ -45,6 +45,7 @@
     <ClInclude Include="lesson_natural_numbers.h" />
     <ClInclude Include="lesson_state.h" />
     <ClInclude Include="menu_state.h" />
+    <ClInclude Include="quiz.hpp" />
     <ClInclude Include="quizzes.hpp" />
     <ClInclude Include="quiz_state.h" />
     <ClInclude Include="register_state.h" />
