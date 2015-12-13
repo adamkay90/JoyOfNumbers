@@ -47,6 +47,7 @@ void Game::loadTextures()
 	texManager.loadTexture("zero", "media/zero.png");
 	texManager.loadTexture("next", "media/next.png");
 	texManager.loadTexture("text_bubble", "media/text_bubble.png");
+	texManager.loadTexture("Ross_Strip", "media/Ross_Strip.png");
 }
 
 void Game::gameLoop() {

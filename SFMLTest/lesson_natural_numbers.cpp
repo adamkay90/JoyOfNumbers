@@ -1,6 +1,6 @@
-#include "lesson_state.h"
+#include "lesson_natural_numbers.h"
 
-LessonState::LessonState(Game* game) {
+LessonNaturalNumbers::LessonNaturalNumbers(Game* game) {
 	this->game = game;
 	sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
 	this->view.setSize(pos);
@@ -19,7 +19,7 @@ LessonState::LessonState(Game* game) {
 	textBubble.setPosition(sf::Vector2f(260, 500));
 	text.setPosition(textBubble.getPosition().x + 90, textBubble.getPosition().y + 20);
 
-	LessonState::gui = new tgui::Gui(this->game->window);
+	LessonNaturalNumbers::gui = new tgui::Gui(this->game->window);
 	gui->setGlobalFont("media/arial.ttf");
 
 	setupGui();
@@ -27,9 +27,10 @@ LessonState::LessonState(Game* game) {
 	faceAniHandler.frameSize = sf::IntRect(0, 0, 280, 304);
 	faceAniHandler.addAnim(Animation(0, 3, 0.1f));
 	faceAniHandler.update(0.0f);
+
 }
 
-void LessonState::draw(const float dt)
+void LessonNaturalNumbers::draw(const float dt)
 {
 	this->game->window.setView(this->view);
 
@@ -39,15 +40,6 @@ void LessonState::draw(const float dt)
 	// Render everything
 	// this->game->window.draw(logo);
 	// this->game->window.draw(face);
-
-	this->faceAniHandler.changeAnim(0);
-
-
-	/* Update the animation */
-	this->faceAniHandler.update(dt);
-
-	/* Update the sprite */
-	this->face.setTextureRect(this->faceAniHandler.bounds);
 
 	this->game->window.draw(face);
 	this->game->window.draw(textBubble);
@@ -60,12 +52,12 @@ void LessonState::draw(const float dt)
 }
 
 
-void LessonState::update(const float dt)
+void LessonNaturalNumbers::update(const float dt)
 {
 
 }
 
-void LessonState::handleInput()
+void LessonNaturalNumbers::handleInput()
 {
 	sf::Event event;
 
@@ -113,6 +105,7 @@ void LessonState::handleInput()
 		if (callback.id == 1)
 		{
 			// For the back button
+			std::cout << "Back button clicked!" << std::endl;
 			this->game->poppedState = true;
 			this->game->popState();
 		}
@@ -121,7 +114,7 @@ void LessonState::handleInput()
 	return;
 }
 
-void LessonState::setupGui() {
+void LessonNaturalNumbers::setupGui() {
 	// Create the log out button
 	tgui::Button::Ptr button2(*gui);
 	button2->load("TGUI-0.6/widgets/Black.conf");
@@ -132,12 +125,12 @@ void LessonState::setupGui() {
 	button2->setCallbackId(1);
 }
 
-void LessonState::nextDialog() {
+void LessonNaturalNumbers::nextDialog() {
 	dialogID++;
 	text.setString(dialog.at(dialogID));
 }
 
-void LessonState::previousDialog() {
+void LessonNaturalNumbers::previousDialog() {
 	if (dialogID > 0) {
 		dialogID--;
 		text.setString(dialog.at(dialogID));

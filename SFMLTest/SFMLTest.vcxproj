@@ -11,12 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="animation_handler.cpp" />
     <ClCompile Include="client_socket.cpp" />
     <ClCompile Include="error_state.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="game_state_editor.cpp" />
     <ClCompile Include="game_state_login.cpp" />
     <ClCompile Include="game_state_start.cpp" />
+    <ClCompile Include="lesson_natural_numbers.cpp" />
     <ClCompile Include="lesson_state.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu_state.cpp" />
@@ -26,6 +28,7 @@
     <ClCompile Include="texture_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="animation_handler.h" />
     <ClInclude Include="client_socket.h" />
     <ClInclude Include="error_state.h" />
     <ClInclude Include="game.h" />
@@ -33,6 +36,7 @@
     <ClInclude Include="game_state_editor.h" />
     <ClInclude Include="game_state_login.h" />
     <ClInclude Include="game_state_start.h" />
+    <ClInclude Include="lesson_natural_numbers.h" />
     <ClInclude Include="lesson_state.h" />
     <ClInclude Include="menu_state.h" />
     <ClInclude Include="quiz_state.h" />
@@ -46,6 +50,7 @@
     <Image Include="media\next.png" />
     <Image Include="media\one.png" />
     <Image Include="media\Ross_Face.png" />
+    <Image Include="media\Ross_Strip.png" />
     <Image Include="media\text_bubble.png" />
     <Image Include="media\zero.png" />
   </ItemGroup>

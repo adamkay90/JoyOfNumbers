@@ -11,7 +11,7 @@
 #include "quiz_state.h"
 #include "animation_handler.h"
 
-class LessonState : public GameState
+class LessonNaturalNumbers : public GameState
 {
 private:
 
@@ -29,12 +29,13 @@ private:
 
 	AnimationHandler faceAniHandler;
 
+
 public:
 
 	virtual void draw(const float dt);
 	virtual void update(const float dt);
 	virtual void handleInput();
 
-	LessonState(Game* game);
-	~LessonState();
+	LessonNaturalNumbers(Game* game);
+	~LessonNaturalNumbers();
 };
