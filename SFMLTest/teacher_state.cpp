@@ -1,4 +1,6 @@
 #include "teacher_state.h"
+#include "client_socket.h"
+#include "menu_state.h"
 #include <iostream>
 
 
@@ -39,7 +41,14 @@ void TeacherState::on_submit_click(){
 		tgui::EditBox::Ptr password = static_cast<tgui::EditBox::Ptr>(gui->get("password"));
 
 		tgui::Checkbox::Ptr inst = static_cast<tgui::Checkbox::Ptr>(gui->get("instructor"));
+		
+		if (ClientSocket::add_user(user_name->getText(), first_name->getText(), last_name->getText(), password->getText(), inst->isChecked()) == sf::Uint64(2)){
+			//TODO: show success
 
+		}
+		else{
+			//TODO: show failure
+		}
 		//html call using this stuff
 	}
 	else if ((static_cast<tgui::RadioButton::Ptr>(gui->get("radio_remove")))->Checked){

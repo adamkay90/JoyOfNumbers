@@ -6,6 +6,18 @@
 #include "client_socket.h"
 //TODO use actual number of lessons for quiz info and lesson info
 
+namespace client_information{
+	const char* const IP_ADDRESS = "155.99.175.104";
+	const int PORT = 55555;
+	sf::Uint64 user_id_ = 0;
+	std::string user_name_;
+	std::string first_name_;
+	std::string last_name_;
+	bool instructor_;
+	std::vector<sf::Uint64> quizzes_;
+	std::vector<sf::Uint64> sections_;
+}
+
 
 sf::Uint64 ClientSocket::login(std::string user_name, std::string password){
 	
