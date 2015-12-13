@@ -29,7 +29,6 @@ LessonState::LessonState(Game* game) {
 	faceAniHandler.addAnim(Animation(0, 3, 0.1f));
 	faceAniHandler.update(0.0f);
 
-		dialog.push_back("Lesson 1: Natural Numbers");
 		dialog.push_back("Hi, and welcome to the Joy of Numbers. I'm your host, Bob Ross. \nI'm so glad you could join me today to learn about one of life's most\nfascinating topics.");
 		dialog.push_back("Today, we're going to talk about natural numbers. You probably\nknow a lot about natural numbers already, and you don't even know it yet.");
 		dialog.push_back("Let's get started, shall we?");
