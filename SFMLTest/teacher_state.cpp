@@ -1,4 +1,6 @@
 #include "teacher_state.h"
+#include "client_socket.h"
+#include "menu_state.h"
 #include <iostream>
 #include "client_socket.h"
 #include "error_state.h"
@@ -45,7 +47,7 @@ void TeacherState::on_submit_click(){
 			output->setText("no blank fields allowed");
 			return;
 		}
-		if (ClientSocket::register_user(user_name->getText(), first_name->getText(), last_name->getText(), password->getText(), inst->isChecked()) != 0){
+		if (ClientSocket::add_user(user_name->getText(), first_name->getText(), last_name->getText(), password->getText(), inst->isChecked()) != 0){
 			//success
 			tgui::Label::Ptr output = static_cast<tgui::Label::Ptr>(gui->get("output_label"));
 			output->setText("user succesfully registered");
@@ -56,7 +58,7 @@ void TeacherState::on_submit_click(){
 			this->game->pushState(new ErrorState(this->game, "registration failed"));
 			return;
 		}
-		//html call using this stuff
+		
 
 	}
 	else if ((static_cast<tgui::RadioButton::Ptr>(gui->get("radio_remove")))->Checked){

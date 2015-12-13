@@ -1,4 +1,7 @@
 #include "register_state.h"
+#include "client_socket.h"
+#include "teacher_state.h"
+#include "menu_state.h"
 
 void RegisterState::draw(const float dt)
 {
@@ -55,8 +58,14 @@ void RegisterState::handleInput()
 			// For the register button
 			std::cout << "Register button clicked!" << std::endl;
 			getDataFromTextBoxes();
-			
-
+			if (ClientSocket::register_user(game->username, game->firstName, game->lastName, game->password, game->isTeacher) == sf::Uint64(2)){
+				if (game->isTeacher){
+					this->game->pushState(new TeacherState(this->game));
+				}
+				else{
+					this->game->pushState(new MenuState(this->game));
+				}
+			}
 		}
 		else if (callback.id == 2) {
 			// For the back button

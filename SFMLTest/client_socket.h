@@ -3,15 +3,15 @@
 #include <SFML\Network.hpp>
 
 namespace client_information{
-	static const char* const IP_ADDRESS = "155.99.175.104";
-	static const int PORT = 55555;
-	static sf::Uint64 user_id_ = 0;
-	static std::string user_name_;
-	static std::string first_name_;
-	static std::string last_name_;
-	static bool instructor_;
-	static std::vector<sf::Uint64> quizzes_;
-	static std::vector<sf::Uint64> sections_;
+	extern const char* const IP_ADDRESS;
+	extern const int PORT;
+	extern sf::Uint64 user_id_;
+	extern std::string user_name_;
+	extern std::string first_name_;
+	extern std::string last_name_;
+	extern bool instructor_;
+	extern std::vector<sf::Uint64> quizzes_;
+	extern std::vector<sf::Uint64> sections_;
 }
 
 class ClientSocket
