@@ -9,7 +9,7 @@
 #include "teacher_state.h"
 #include "menu_state.h"
 #include "lesson_state.h"
-
+#include "error_state.h"
 int main()
 {
 	
@@ -22,6 +22,7 @@ int main()
 	//game.pushState(new LessonState(&game));
 	//game.pushState(new QuizState(&game));
 	//game.pushState(new TeacherState(&game));
+	//game.pushState(new ErrorState(&game, "token"));
 	game.gameLoop();
 	
 	return 0;

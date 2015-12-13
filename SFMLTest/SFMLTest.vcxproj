@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="client_socket.cpp" />
+    <ClCompile Include="error_state.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="game_state_editor.cpp" />
     <ClCompile Include="game_state_login.cpp" />
@@ -26,6 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client_socket.h" />
+    <ClInclude Include="error_state.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="game_state.h" />
     <ClInclude Include="game_state_editor.h" />
