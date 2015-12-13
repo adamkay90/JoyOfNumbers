@@ -82,8 +82,6 @@ void GameStateLogin::handleInput()
 			// If the key was the Esc key
 			if (event.key.code == sf::Keyboard::Escape) this->game->window.close();
 
-			// If the key was the Space Bar, load the game State
-			else if (event.key.code == sf::Keyboard::Space) this->loadMenu();
 		}
 		}
 
