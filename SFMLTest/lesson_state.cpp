@@ -116,16 +116,15 @@ void LessonState::handleInput()
 		case sf::Event::MouseButtonPressed:
 		{
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-				if (dialogID < 17) {
+
 					nextDialog();
 					break;
-				}
+				
 			}
 			else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
-				if (dialogID > 0) {
+
 					previousDialog();
 					break;
-				}
 			}
 
 		}
@@ -164,17 +163,16 @@ void LessonState::setupGui() {
 }
 
 void LessonState::nextDialog() {
-
+	dialogID++;
 	if (dialogID < dialog.size()) {
-		dialogID++;
 		text.setString(dialog.at(dialogID));
 	}
 
 }
 
 void LessonState::previousDialog() {
+	dialogID--;
 	if (dialogID > 0) {
-		dialogID--;
 		text.setString(dialog.at(dialogID));
 	}
 }
