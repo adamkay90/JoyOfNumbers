@@ -31,7 +31,7 @@ void TeacherState::on_ross_click(){
 }
 void TeacherState::on_submit_click(){
 	std::cout << "potato" << std::endl;
-	if ((static_cast<tgui::RadioButton::Ptr>(gui->get("radio_register")))->Checked){
+	if ((static_cast<tgui::RadioButton::Ptr>(gui->get("radio_register")))->isChecked()){
 		tgui::EditBox::Ptr user_name = static_cast<tgui::EditBox::Ptr>(gui->get("username"));
 
 		tgui::EditBox::Ptr first_name = static_cast<tgui::EditBox::Ptr>(gui->get("firstname"));
@@ -61,11 +61,11 @@ void TeacherState::on_submit_click(){
 		
 
 	}
-	else if ((static_cast<tgui::RadioButton::Ptr>(gui->get("radio_remove")))->Checked){
+	else if ((static_cast<tgui::RadioButton::Ptr>(gui->get("radio_remove")))->isChecked()){
 		tgui::EditBox::Ptr user_name = static_cast<tgui::EditBox::Ptr>(gui->get("username"));
 		//html call using this
 	}
-	else if ((static_cast<tgui::RadioButton::Ptr>(gui->get("radio_rename")))->Checked){
+	else if ((static_cast<tgui::RadioButton::Ptr>(gui->get("radio_rename")))->isChecked()){
 		tgui::EditBox::Ptr user_name = static_cast<tgui::EditBox::Ptr>(gui->get("username"));
 
 		tgui::EditBox::Ptr first_name = static_cast<tgui::EditBox::Ptr>(gui->get("firstname"));
@@ -100,6 +100,13 @@ void TeacherState::on_register_select(){
 	inst->uncheck();
 	inst->load("TGUI-0.6/widgets/White.conf");
 	inst->enable();
+
+	tgui::RadioButton::Ptr remove = static_cast<tgui::Checkbox::Ptr>(gui->get("radio_remove"));
+	remove->uncheck();
+
+	tgui::RadioButton::Ptr rename = static_cast<tgui::Checkbox::Ptr>(gui->get("radio_rename"));
+	rename->uncheck();
+
 }
 void TeacherState::on_remove_select(){
 	tgui::EditBox::Ptr first_name = static_cast<tgui::EditBox::Ptr>(gui->get("firstname"));
@@ -125,6 +132,13 @@ void TeacherState::on_remove_select(){
 	inst->load("TGUI-0.6/widgets/Black.conf");
 	inst->setSize(20, 20);
 	inst->disable();
+
+
+	tgui::RadioButton::Ptr register_ = static_cast<tgui::Checkbox::Ptr>(gui->get("radio_register"));
+	register_->uncheck();
+
+	tgui::RadioButton::Ptr rename = static_cast<tgui::Checkbox::Ptr>(gui->get("radio_rename"));
+	rename->uncheck();
 }
 void TeacherState::on_rename_select(){
 	tgui::EditBox::Ptr first_name = static_cast<tgui::EditBox::Ptr>(gui->get("firstname"));
@@ -150,6 +164,13 @@ void TeacherState::on_rename_select(){
 	inst->load("TGUI-0.6/widgets/Black.conf");
 	inst->setSize(20, 20);
 	inst->disable();
+
+
+	tgui::RadioButton::Ptr remove = static_cast<tgui::Checkbox::Ptr>(gui->get("radio_remove"));
+	remove->uncheck();
+
+	tgui::RadioButton::Ptr register_ = static_cast<tgui::Checkbox::Ptr>(gui->get("radio_register"));
+	register_->uncheck();
 }
 void TeacherState::handleInput()
 {
