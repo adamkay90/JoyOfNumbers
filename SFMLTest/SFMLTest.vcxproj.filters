@@ -54,19 +54,7 @@
     <ClCompile Include="error_state.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lesson_natural_numbers.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="animation_handler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="lesson_data.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="lesson.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="quiz.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,25 +98,7 @@
     <ClInclude Include="error_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lesson_natural_numbers.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="animation_handler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lesson_data.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lesson.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lessons.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="quizzes.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="quiz.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

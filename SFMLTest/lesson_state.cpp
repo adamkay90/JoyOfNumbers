@@ -1,7 +1,5 @@
 #include "lesson_state.h"
 
-#include "lesson_natural_numbers.h"
-
 LessonState::LessonState(Game* game) {
 	this->game = game;
 	sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
