@@ -63,7 +63,23 @@ void TeacherState::on_submit_click(){
 	}
 	else if ((static_cast<tgui::RadioButton::Ptr>(gui->get("radio_remove")))->isChecked()){
 		tgui::EditBox::Ptr user_name = static_cast<tgui::EditBox::Ptr>(gui->get("username"));
-		//html call using this
+		
+		if (user_name->getText().isEmpty()){
+			tgui::Label::Ptr output = static_cast<tgui::Label::Ptr>(gui->get("output_label"));
+			output->setText("no blank fields allowed");
+			return;
+		}
+		if (ClientSocket::remove_user(user_name->getText()) != 0){
+			//success
+			tgui::Label::Ptr output = static_cast<tgui::Label::Ptr>(gui->get("output_label"));
+			output->setText("user succesfully deleted");
+			return;
+		}
+		else{
+			//fail
+			this->game->pushState(new ErrorState(this->game, "deletion failed"));
+			return;
+		}
 	}
 	else if ((static_cast<tgui::RadioButton::Ptr>(gui->get("radio_rename")))->isChecked()){
 		tgui::EditBox::Ptr user_name = static_cast<tgui::EditBox::Ptr>(gui->get("username"));
