@@ -102,6 +102,7 @@ Game::Game()
 	this->window.setFramerateLimit(60);
 
 	this->background.setTexture(this->texManager.getRef("background"));
+	//this->window.draw(background);
 
 	this->defaultFont.loadFromFile("media/arial.ttf");
 }

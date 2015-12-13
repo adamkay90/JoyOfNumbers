@@ -14,9 +14,12 @@ private:
 
 	Selection currentChoice;
 	Selection correctAnswer;
+	sf::Uint64 quizNumber; 
+	sf::String quizQuestion;
+	sf::String correctWrittenAnswer;
+	bool multipleChoiceBool; // if 1 it's a multiple choice question else, an answer must be typed in
 
 	sf::View view;
-	sf::CircleShape s1, s2, s3, s4;
 	void setupGui();
 
 
@@ -32,7 +35,9 @@ public:
 	QuizState(Game* game);
 	~QuizState();
 
+	void setupMultipleChoiceButtons(sf::String answer1, sf::String answer2, sf::String answer3, sf::String answer4);
 	void showCorrectAnswer(Selection correctAnswer);
 	void resetRadioButtonColor();
-	void changeText(std::string questionNumber, std::string question, std::string answerA, std::string answerB, std::string answerC, std::string answerD);
+	void setupMultipleChoiceQuestion(sf::Uint64 questionNumber, sf::String question, sf::String answerA, sf::String answerB, sf::String answerC, sf::String answerD);
+	void setupWrittenAnswerQuestion(sf::Uint64 questionNumber, sf::String question);
 };
