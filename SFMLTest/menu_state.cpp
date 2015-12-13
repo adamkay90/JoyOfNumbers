@@ -1,4 +1,6 @@
 #include "menu_state.h"
+#include "client_socket.h";
+#include "lesson_state.h"
 
 void MenuState::draw(const float dt)
 {
@@ -81,7 +83,7 @@ void MenuState::handleInput()
 			switch (id) {
 			case 0:
 				//Natural Numbers
-				std::cout << "HERE"<< std::endl;
+				this->game->pushState(new LessonState(this->game));
 				break;
 
 			case 1:
@@ -117,11 +119,14 @@ MenuState::MenuState(Game* game)
 
 	MenuState::gui = new tgui::Gui(this->game->window);
 	gui->setGlobalFont("media/arial.ttf");
-
-	setupGui();
-
+	
 	unlockedMenus.resize(10);
 	unlockedMenus.at(0) = true;
+	for (int i = 1; i < 10; i++){
+		unlockedMenus.at(i) = false;
+	}
+	
+	setupGui();
 }
 
 
@@ -135,6 +140,7 @@ void MenuState::setupGui() {
 	listBox->addItem("Lesson 2: Integers", 1);
 	listBox->addItem("Lesson 3: Binary", 2);
 	listBox->addItem("Quiz", 3);
+
 
 	listBox->bindCallback(tgui::ListBox::ItemSelected);
 	listBox->setCallbackId(0);
@@ -169,10 +175,36 @@ void MenuState::setupGui() {
 	button2->setText("Logout");
 	button2->bindCallback(tgui::Button::LeftMouseClicked);
 	button2->setCallbackId(2);
+	
+	ClientSocket::quiz_score(sf::Uint64(1), sf::Uint64(1));
+
+	ClientSocket::lesson_info();
+	ClientSocket::quiz_info();
+
+	int counter = -1; 
+
+	for (const sf::Uint64 &section : client_information::sections_){
+		if (section != sf::Uint64(0)){
+			unlockMenu(++counter);
+		}
+		else{
+			break; 
+		}
+	}
+	
+
+	for (const sf::Uint64 &quiz : client_information::quizzes_){
+		if (quiz != sf::Uint64(0)){
+			unlockMenu(++counter);
+		}
+		else{
+			break;
+		}
+	}
 }
 
 void MenuState::unlockMenu(int menuToUnlock) {
-	unlockedMenus.at(menuToUnlock) == true;
+	unlockedMenus.at(menuToUnlock) = true; 
 }
 
 MenuState::~MenuState() {
