@@ -17,6 +17,7 @@ class ErrorState: public GameState
 private:
 
 	sf::Sprite logo;
+	sf::Sprite logo1;
 	sf::Sprite face;
 	sf::Music background;
 

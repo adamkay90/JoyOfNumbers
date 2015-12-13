@@ -114,13 +114,18 @@ ErrorState::ErrorState(Game* game, std::string error_message)
 	logo.setTexture(this->game->texManager.getRef("Logo"));
 	logo.setOrigin(logo.getTextureRect().width / 2, logo.getTextureRect().height / 2);
 	logo.setPosition(this->game->window.getSize().x / 2, 150);
-
+	/*
+	logo1.setTexture(this->game->texManager.getRef("HappyLittleAccidents"));
+	//logo1.setTexture(this->game->texManager.getRef("Logo"));
+	logo1.setOrigin(logo1.getTextureRect().width / 2, logo1.getTextureRect().height / 2);
+	logo1.setPosition(this->game->window.getSize().x / 2, 150);
+	
+	*/
 	if (!background.openFromFile("media/Interlude.ogg")) {
 
 	}
 	background.play();
 	background.setLoop(true);
-
 	face.setTexture(this->game->texManager.getRef("Ross_Face"));
 	face.setScale(sf::Vector2f(0.5, 0.5));
 	face.setOrigin(face.getTextureRect().width / 2, face.getTextureRect().height / 2);
@@ -185,16 +190,29 @@ void ErrorState::return_state(){
 }
 
 void ErrorState::SetupGui(std::string error_message) {
+
+	tgui::Picture::Ptr new_logo(*gui, "logo1");
+	new_logo->load("TGUI-0.6/widgets/HappyLittleAccidents.png");
+	new_logo->setPosition(500, 30);
+
+	tgui::Label::Ptr generic_error(*gui, "generic_error");
+	//We don't make mistakes, just happy little accidents.
+	generic_error->load("TGUI-0.6/widgets/Black.conf");
+	generic_error->setSize(400, 100);
+	generic_error->setPosition(400, 500);
+	generic_error->setText("We don't make mistakes, just \nhappy little accidents.");
+
 	tgui::Label::Ptr error(*gui, "error");
 	//We don't make mistakes, just happy little accidents.
 	error->load("TGUI-0.6/widgets/Black.conf");
-	error->setSize(400, 400);
-	error->setPosition(400, 400);
+	error->setSize(400, 100);
+	error->setPosition(400, 570);
+	error->setText(error_message);
 
 	tgui::Button::Ptr acknowledge(*gui, "acknowledge");
 	acknowledge->load("TGUI-0.6/widgets/Black.conf");
 	acknowledge->setSize(260, 60);
-	acknowledge->setPosition(this->game->window.getSize().x * (2 / 3.f) - 130, this->game->window.getSize().y - 70);
+	acknowledge->setPosition(this->game->window.getSize().x * (2 / 3.f) - 130, this->game->window.getSize().y - 170);
 	acknowledge->setText("I HAVE SEEN THE LIGHT");
 	acknowledge->bindCallback(tgui::Button::LeftMouseClicked);
 	acknowledge->setCallbackId(1);
