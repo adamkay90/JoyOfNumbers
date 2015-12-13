@@ -13,7 +13,7 @@ LessonState::LessonState(Game* game) {
 	text.setFont(this->game->defaultFont);
 	text.setCharacterSize(24);
 	text.setColor(sf::Color::Black);
-	text.setString("This is a test string. \nLet's check for line breaks too. \nAnd maybe a third one.");
+	// text.setString("This is a test string. \nLet's check for line breaks too. \nAnd maybe a third one.");
 
 	face.setPosition(sf::Vector2f(10, this->game->window.getSize().y - face.getTextureRect().height - 10));
 	textBubble.setPosition(sf::Vector2f(260, 500));
@@ -130,6 +130,14 @@ void LessonState::setupGui() {
 	button2->setText("Back");
 	button2->bindCallback(tgui::Button::LeftMouseClicked);
 	button2->setCallbackId(1);
+
+	tgui::TextBox::Ptr textBox(*gui, "Text");
+	textBox->setPosition(textBubble.getPosition().x + 90, textBubble.getPosition().y + 20);
+	textBox->setSize(900, 260);
+	textBox->setBorderColor(sf::Color::White);
+	textBox->setBackgroundColor(sf::Color::White);
+	textBox->setReadOnly();
+	textBox->setText("Hello, my name is Mr. Burns. I believe you have a letter for me. Okay, Mr. Burns, what's your first name? I don't know. Great plan, Bart.");
 }
 
 void LessonState::nextDialog() {

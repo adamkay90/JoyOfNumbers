@@ -15,6 +15,7 @@ void Game::pushState(GameState* state) {
 
 // Pops a state off the state stack
 void Game::popState() {
+	poppedState = true;
 	delete this->states.top();
 	this->states.pop();
 
