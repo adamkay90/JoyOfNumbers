@@ -1,4 +1,5 @@
 #include "quiz_state.h"
+#include "client_socket.h"
 
 // Constructor
 QuizState::QuizState(Game* game)
@@ -7,7 +8,7 @@ QuizState::QuizState(Game* game)
 	// DATA FOR THE QUIZ
 	//TODO QUIZNUMBER and QUIZ qeuestion must be passed as a constructor argument
 	this->quizNumber = 1;
-	this->correctAnswerCount = 0;
+	this->correctAnswerCount = sf::Uint64(0);
 	this->quizQuestion = "What is the binary representation of the decimal number 5 ?";
 	correctAnswer = Selection::A;
 
@@ -137,6 +138,7 @@ void QuizState::handleInput()
 			
 			// return back to main menu
 			if (quizNumber == 11){
+				ClientSocket::quiz_score(sf::Uint64(1), correctAnswerCount);
 				this->game->poppedState = true;
 				this->game->popState();
 				return;
@@ -222,7 +224,7 @@ void QuizState::processQuestionGuiState(){
 	case 3:
 	{
 			  updateMultipleChoiceQuestion(quizNumber, "What is the negation of -212", " 212", " 213", " 200", " 123");
-			  correctAnswer = Selection::B;
+			  correctAnswer = Selection::A;
 			  quizNumber++;
 			  break;
 	}
@@ -585,6 +587,7 @@ void QuizState::setupMultipleChoiceQuestion(sf::Uint64 questionNumber, sf::Strin
 	radioButtonA->bindCallback(tgui::RadioButton::Checked);
 	radioButtonA->setCallbackId(2);
 	radioButtonA->setSize(32, 32);
+	radioButtonA->setTextColor(sf::Color(255, 255, 255));
 
 	tgui::RadioButton::Ptr radioButtonB = gui->copy(radioButtonA, "B");
 	radioButtonB->setPosition(200, 550);
