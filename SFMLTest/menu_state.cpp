@@ -112,6 +112,7 @@ void MenuState::handleInput()
 		// The logout button was clicked
 		else if (callback.id == 2) {
 			this->game->poppedState = true;
+			ClientSocket::reset_data();
 			this->game->popState();
 			return;
 		}
