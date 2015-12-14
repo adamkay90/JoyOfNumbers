@@ -2,7 +2,7 @@
 #include "client_socket.h"
 #include "teacher_state.h"
 #include "menu_state.h"
-
+#include "error_state.h"
 void RegisterState::draw(const float dt)
 {
 	this->game->window.setView(this->view);
@@ -58,13 +58,20 @@ void RegisterState::handleInput()
 			// For the register button
 			std::cout << "Register button clicked!" << std::endl;
 			getDataFromTextBoxes();
-			if (ClientSocket::register_user(game->username, game->firstName, game->lastName, game->password, game->isTeacher) == sf::Uint64(2)){
+			if (game->username.empty() || game->firstName.empty() || game->lastName.empty() || game->password.empty()){
+				tgui::Label::Ptr output = static_cast<tgui::Label::Ptr>(gui->get("output"));
+				output->setText("no blank fields allowed");
+			}
+			else if (ClientSocket::register_user(game->username, game->firstName, game->lastName, game->password, game->isTeacher) == sf::Uint64(2)){
 				if (game->isTeacher){
 					this->game->pushState(new TeacherState(this->game));
 				}
 				else{
 					this->game->pushState(new MenuState(this->game));
 				}
+			}
+			else{
+				this->game->pushState(new ErrorState(this->game, "Registration failed"));
 			}
 		}
 		else if (callback.id == 2) {
@@ -199,6 +206,10 @@ void RegisterState::SetupGui() {
 	button2->setText("Back");
 	button2->bindCallback(tgui::Button::LeftMouseClicked);
 	button2->setCallbackId(2);
+
+	tgui::Label::Ptr output(*gui, "output");
+	output->setText("");
+	output->setPosition(250, 600);
 
 }
 
