@@ -23,7 +23,7 @@ public:
 	bool isTeacher;
 
 	bool poppedState;
-
+	
 	// The state stack
 	std::stack<GameState*> states;
 

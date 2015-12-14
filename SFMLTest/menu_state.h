@@ -16,13 +16,14 @@ private:
 	void setupGui();
 	std::vector<bool> unlockedMenus;
 	void unlockMenu(int menuToUnlock);
-
+	
 
 public:
 
 	virtual void draw(const float dt);
 	virtual void update(const float dt);
 	virtual void handleInput();
+	void unlock();
 
 	tgui::Gui* gui;
 	MenuState(Game* game);
