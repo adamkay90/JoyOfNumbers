@@ -25,7 +25,7 @@ int main()
 	//game.pushState(new QuizState(&game));
 	//game.pushState(new TeacherState(&game));
 	//game.pushState(new ErrorState(&game, "token"));
-	game.pushState(new RegisterState(&game));
+	//game.pushState(new RegisterState(&game));
 	game.gameLoop();
 	
 	return 0;

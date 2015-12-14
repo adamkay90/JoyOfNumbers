@@ -18,23 +18,7 @@ void MenuState::draw(const float dt)
 
 void MenuState::update(const float dt)
 {
-	if (this->game->returnedFromLesson1 == true) {
-		std::cout << "Should be unlocking!" << std::endl;
-		unlock();
-		this->game->returnedFromLesson1 = false;
-	}
-	if (this->game->returnedFromLesson2 == true) {
-		unlock();
-		this->game->returnedFromLesson2 = false;
-	}
-	if (this->game->returnedFromLesson3 == true) {
-		unlock();
-		this->game->returnedFromLesson3 = false;
-	}
-	if (this->game->returnedFromQuiz1 == true) {
-		unlock();
-		this->game->returnedFromQuiz1 = false;
-	}
+
 }
 
 void MenuState::handleInput()
@@ -211,8 +195,13 @@ void MenuState::unlockMenu(int menuToUnlock) {
 }
 
 void MenuState::unlock(){
+	client_information::sections_.clear();
+	client_information::quizzes_.clear();
+
 	ClientSocket::lesson_info();
 	ClientSocket::quiz_info();
+
+
 
 	int counter = -1; 
 
