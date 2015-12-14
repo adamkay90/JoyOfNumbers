@@ -143,6 +143,12 @@ MenuState::MenuState(Game* game)
 
 
 void MenuState::setupGui() {
+
+	tgui::Picture::Ptr background(*gui, "background");
+	background->load("TGUI-0.6/widgets/2.jpg");
+	background->setPosition(0, 0);
+
+
 	tgui::ListBox::Ptr listBox(*gui, "List");
 	listBox->load("TGUI-0.6/widgets/Black.conf");
 	listBox->setSize(800, 600);

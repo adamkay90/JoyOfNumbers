@@ -289,7 +289,9 @@ void TeacherState::loadMenu()
 
 void TeacherState::SetupGui() {
 
-
+	tgui::Picture::Ptr background(*gui, "background");
+	background->load("TGUI-0.6/widgets/3.jpg");
+	background->setPosition(0, 0);
 
 
 	tgui::Picture::Ptr picture(*gui, "ross");

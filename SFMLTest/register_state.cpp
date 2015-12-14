@@ -60,6 +60,7 @@ void RegisterState::handleInput()
 			getDataFromTextBoxes();
 			if (game->username.empty() || game->firstName.empty() || game->lastName.empty() || game->password.empty()){
 				tgui::Label::Ptr output = static_cast<tgui::Label::Ptr>(gui->get("output"));
+				//output->setTextColor(sf::Color::Black);
 				output->setText("no blank fields allowed");
 			}
 			else if (ClientSocket::register_user(game->username, game->firstName, game->lastName, game->password, game->isTeacher) == sf::Uint64(2)){
@@ -89,11 +90,11 @@ void RegisterState::handleInput()
 RegisterState::RegisterState(Game* game)
 {
 	this->game = game;
+	
 	sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
 	this->view.setSize(pos);
 	pos *= 0.5f;
 	this->view.setCenter(pos);
-
 
 	RegisterState::gui = new tgui::Gui(this->game->window);
 	gui->setGlobalFont("media/arial.ttf");
@@ -132,9 +133,13 @@ void RegisterState::getDataFromTextBoxes() {
 }
 
 void RegisterState::SetupGui() {
+	tgui::Picture::Ptr background(*gui, "background");
+	background->load("TGUI-0.6/widgets/4.jpg");
+	background->setPosition(0, 0);
 
 	// Create the username label
 	tgui::Label::Ptr labelRegisterNew(*gui);
+	//labelRegisterNew->setTextColor(sf::Color::Black);
 	labelRegisterNew->setText("Register New User");
 	labelRegisterNew->setTextSize(32);
 	labelRegisterNew->setPosition(this->game->window.getSize().x / 2.f - labelRegisterNew->getSize().x / 2.f, 100);
@@ -165,26 +170,30 @@ void RegisterState::SetupGui() {
 
 	// Create the username label
 	tgui::Label::Ptr labelUsername(*gui);
+	//labelUsername->setTextColor(sf::Color::Magenta);
 	labelUsername->setText("Username:");
 	labelUsername->setPosition(editBoxUsername->getSize().x - labelUsername->getSize().x - 10, editBoxUsername->getPosition().y);
 
 	// Create the password label
 	tgui::Label::Ptr labelPassword(*gui);
+	//labelPassword->setTextColor(sf::Color::Magenta);
 	labelPassword->setText("Password:");
 	labelPassword->setPosition(editBoxPassword->getSize().x - labelPassword->getSize().x - 10, editBoxPassword->getPosition().y);
 
 	// Create the first name label
 	tgui::Label::Ptr labelFirstName(*gui);
+	//labelFirstName->setTextColor(sf::Color::Magenta);
 	labelFirstName->setText("First Name:");
 	labelFirstName->setPosition(editBoxFirstName->getSize().x - labelFirstName->getSize().x - 10, editBoxFirstName->getPosition().y);
 
 	// Create the last name label
 	tgui::Label::Ptr labelLastName(*gui);
+	//labelLastName->setTextColor(sf::Color::Magenta);
 	labelLastName->setText("Last Name:");
 	labelLastName->setPosition(editBoxLastName->getSize().x - labelLastName->getSize().x - 10, editBoxLastName->getPosition().y);
 
 	tgui::Checkbox::Ptr checkboxTeacher(*gui, "Teacher");
-	checkboxTeacher->load("TGUI-0.6/widgets/Black.conf");
+	checkboxTeacher->load("TGUI-0.6/widgets/White.conf");
 	checkboxTeacher->setText("Teacher?");
 	checkboxTeacher->setSize(32, 32);
 	checkboxTeacher->setPosition(this->game->window.getSize().x / 2.f, this->game->window.getSize().y - 140);
