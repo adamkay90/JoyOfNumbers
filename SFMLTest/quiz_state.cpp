@@ -206,14 +206,14 @@ void QuizState::processQuestionGuiState(){
 	{
 	case 1:
 	{
-			  updateMultipleChoiceQuestion(quizNumber, "What is the smallest natural number", " -1", " 1", " 0", " -inf");
+			  updateMultipleChoiceQuestion(quizNumber, "What is the smallest natural number?", " -1", " 1", " 0", " -inf");
 			  correctAnswer = Selection::C;
 			  quizNumber++;
 			  break;
 	}
 	case 2:
 	{
-			  updateMultipleChoiceQuestion(quizNumber, "What natural number is 87 fallowed by?", " 85", " 86", " 87", " 88");
+			  updateMultipleChoiceQuestion(quizNumber, "What natural number is 87 followed by?", " 85", " 86", " 87", " 88");
 			  correctAnswer = Selection::D;
 			  quizNumber++;
 			  break;
@@ -262,14 +262,14 @@ void QuizState::processQuestionGuiState(){
 	}
 	case 9:
 	{
-			  updateMultipleChoiceQuestion(quizNumber, "Convert -37 to 8-bit thwo's compliment binary notation", " 11011101", " 11011011", " 11011001", " 00100101");
+			  updateMultipleChoiceQuestion(quizNumber, "Convert -37 to 8-bit two's compliment binary notation", " 11011101", " 11011011", " 11011001", " 00100101");
 			  correctAnswer = Selection::B;
 			  quizNumber++;
 			  break;
 	}
 	case 10:
 	{
-			  updateMultipleChoiceQuestion(quizNumber, "Which of the fallowing is best represented as a negative number?", " debt", " circus elephants", " number of apples", " days left till Christmas");
+			  updateMultipleChoiceQuestion(quizNumber, "Which of the following is best represented as a negative number?", " debt", " circus elephants", " number of apples", " days left till Christmas");
 			  correctAnswer = Selection::A;
 			  quizNumber++;
 			  break;
