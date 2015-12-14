@@ -18,7 +18,6 @@ private:
 	sf::String quizQuestion;
 	sf::String correctWrittenAnswer;
 	bool multipleChoiceBool; // if 1 it's a multiple choice question else, an answer must be typed in
-
 	sf::View view;
 	void setupGui();
 
@@ -35,9 +34,13 @@ public:
 	QuizState(Game* game);
 	~QuizState();
 
-	void setupMultipleChoiceButtons(sf::String answer1, sf::String answer2, sf::String answer3, sf::String answer4);
+	void updateMultipleChoiceQuestion(sf::Uint64 questionNumber, sf::String question, sf::String answer1, sf::String answer2, sf::String answer3, sf::String answer4);
+	void updateWrittenAnswerQuestion(sf::Uint64 questionNumber, sf::String question);
+	//void setupMultipleChoiceButtons(sf::String answer1, sf::String answer2, sf::String answer3, sf::String answer4);
 	void showCorrectAnswer(Selection correctAnswer);
-	void resetRadioButtonColor();
+	void resetRadioButton();
 	void setupMultipleChoiceQuestion(sf::Uint64 questionNumber, sf::String question, sf::String answerA, sf::String answerB, sf::String answerC, sf::String answerD);
 	void setupWrittenAnswerQuestion(sf::Uint64 questionNumber, sf::String question);
+	void hideAllTGuiElements();
+	void processQuestionGuiState();
 };
