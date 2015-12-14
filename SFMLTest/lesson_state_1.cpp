@@ -31,18 +31,19 @@ LessonState1::LessonState1(Game* game) {
 	faceAniHandler.addAnim(Animation(0, 3, 0.1f));
 	faceAniHandler.update(0.0f);
 
-	dialog.push_back("Lesson 2: Integers");
-	dialog.push_back(" Hi there. So glad to see you again. Today I've got something really \nneat to teach you about.");
-	dialog.push_back(" Today we're going to talk about integers!");
-	dialog.push_back(" If you remember from last time, natural numbers are numbers that \nyou can count on your fingers and toes... if you had enough fingers \nand toes, of course.");
-	dialog.push_back(" Integers include all the natural numbers, but they also include all \nthe negative numbers, too.");
-	dialog.push_back(" Now what on earth's a negative number? It's not really something \nyou can count on your fingers, after all.");
-	dialog.push_back(" Think of negative numbers like debt. Having a negative number is like \nhaving debt, you have an absence of some number.");
-	dialog.push_back(" Trust me, I'm no stranger to having debt. It used to be that it was rare \nthat I had a happy little buck in my pocket, haha.");
-	dialog.push_back(" Anyway, integers are just all the positive numbers, all the negative \nnumbers, and zero, too.");
-	dialog.push_back(" Make sure to keep in mind that - 100 is a smaller number than - 10, \nwhich is a smaller number than 0.");
-	dialog.push_back(" Hmm, that's about all I can think of to explain about integers. That \nwasn't so bad, was it ?");
-	dialog.push_back(" I really enjoyed having you here with me today, and I hope to see \nyou again soon.");
+	dialog.push_back("Hi there. So glad to see you again. Today I've got something really \nneat to teach you about.");
+	dialog.push_back("Today we're going to talk about integers!");
+	dialog.push_back("If you remember from last time, natural numbers are numbers that \nyou can count on your fingers and toes... if you had enough fingers\nand toes, of course.");
+	dialog.push_back("Integers include all the natural numbers, but they also include all \nthe negative numbers, too.");
+	dialog.push_back("Now what on earth's a negative number? It's not really something \nyou can count on your fingers, after all.");
+	dialog.push_back("Think of negative numbers like debt. Having a negative number is like \nhaving debt, you have an absence of some number.");
+	dialog.push_back("Trust me, I'm no stranger to having debt. It used to be that it was rare \nthat I had a happy little buck in my pocket, haha.");
+	dialog.push_back("Anyway, integers are just all the positive numbers, all the negative \nnumbers, and zero, too.");
+	dialog.push_back("Make sure to keep in mind that -100 is a smaller number than -10, \nwhich is a smaller number than 0.");
+	dialog.push_back("We can also negate any number. The negation of a negative number is a\npositive number, and the negation of a postive number is a negative\none.");
+	dialog.push_back("You can try to negate zero all you want, but it'll stay zero.");
+	dialog.push_back("Hmm, that's about all I can think of to explain about integers. That \nwasn't so bad, was it?");
+	dialog.push_back("I really enjoyed having you here with me today, and I hope to see \nyou again soon.");
 
 	text.setString(dialog.at(dialogID));
 }

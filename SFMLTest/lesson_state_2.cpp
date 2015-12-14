@@ -30,25 +30,31 @@ LessonState2::LessonState2(Game* game) {
 	faceAniHandler.addAnim(Animation(0, 3, 0.1f));
 	faceAniHandler.update(0.0f);
 
-
-	dialog.push_back(" Lesson 3: Binary Numbers");
-	dialog.push_back(" Hello, and welcome back! Break out your calculators, 'cuz we're going \nto get technical today.");
-	dialog.push_back(" We've learned about natural numbers and integers, so let's learn about \nhow computers represent them!");
-	dialog.push_back(" Computers can only deal in electrical signals - on or off, true or false, \nlight or dark.");
-	dialog.push_back(" Some very smart people came up with a way to represent big numbers as a \nseries of electrical signals, known as binary.");
-	dialog.push_back(" Binary is written using only the numbers 1 and 0.");
-	dialog.push_back(" How about take a look at some examples? Let's start with writing the \nnumber 1 in binary.");
-	dialog.push_back(" 1 in binary is the exact same. Just 1. That was easy, wasn't it?");
-	dialog.push_back(" Changing 2 to binary is a little trickier. Since we only have 1 and 0 to work \nwith, we have to carry the 1 over to the next digit, like if we added \n9 and 1 together.");
-	dialog.push_back(" So 2 in decimal becomes 10.");
-	dialog.push_back(" With 3, we just add 1 to that, so it becomes 11.");
-	dialog.push_back(" And 4, we do the same thing we did with 2, and write to the next digit over, \nso it becomes 100.");
-	dialog.push_back(" You can start to see a pattern here. Each digit of a binary number is 2 to \nsome power. The first digit is 0, the second is 1, the third is 2.");
-	dialog.push_back(" You can make any number into a binary number by splitting it up into \npowers of 2 and adding them all together. Isn't that neat?");
-	dialog.push_back(" Let's be brave and try a bigger number. How about 27?");
-	dialog.push_back(" If we're thinking in powers of 2, then 27 is 16 + 8 + 2 + 1. So we write 1s \nin the proper places and get 11011.");
-	dialog.push_back(" Like with anything else in life, you'll have to practice this to get the \nhang of it.");
-	dialog.push_back(" But I know you can do it.");
+	dialog.push_back("Hello, and welcome back! Break out your calculators, 'cuz we're going \nto get technical today.");
+	dialog.push_back("We've learned about natural numbers and integers, so let's learn about \nhow computers represent them!");
+	dialog.push_back("Computers can only deal in electrical signals - on or off, true or false, \nlight or dark.");
+	dialog.push_back("Some very smart people came up with a way to represent big numbers as a \nseries of electrical signals, known as binary.");
+	dialog.push_back("Binary is written using only the numbers 1 and 0.");
+	dialog.push_back("How about we take a look at some examples? Let's start with writing the\nnumber 1 in binary.");
+	dialog.push_back("1 in binary is the exact same. Just 1. That was easy, wasn't it?");
+	dialog.push_back("Changing 2 to binary is a little trickier. Since we only have 1 and 0 to work \nwith, we have to carry the 1 over to the next digit, like if we added \n9 and 1 together.");
+	dialog.push_back("Whoosh! We carried over the one. You have to make those sounds or \nit doesn't work.");
+	dialog.push_back("So 2 in decimal becomes 10.");
+	dialog.push_back("With 3, we just add 1 to that, so it becomes 11.");
+	dialog.push_back("And 4, we do the same thing we did with 2, and write to the next digit over, \nso it becomes 100.");
+	dialog.push_back("You can start to see a pattern here. Each digit of a binary number is 2 to \nsome power. The first digit is 0, the second is 1, the third is 2.");
+	dialog.push_back("You can make any number into a binary number by splitting it up into \npowers of 2 and adding them all together. Isn't that neat?");
+	dialog.push_back("Let's be brave and try a bigger number. How about 27?");
+	dialog.push_back("If we're thinking in powers of 2, then 27 is 16 + 8 + 2 + 1. So we write 1s \nin the proper places and get 11011.");
+	dialog.push_back("So, if we know that, how about negative numbers? How does the \ncomputer handle those?");
+	dialog.push_back("The computer can use a binary number's first number, or its first bit, as \nwhether or not the number is negative.");
+	dialog.push_back("That means the binary number can't store as LARGE a number, but it can \nnow store negative numbers.");
+	dialog.push_back("To negate a number in binary, you flip all the individual numbers, and \nthen add 1 to the result.");
+	dialog.push_back("So, for example, 001 is 1 in binary.To change it to -1, we flip all the \ndigits to 110...");
+	dialog.push_back("... And then add 1, to get 111.");
+	dialog.push_back("That's it! Did you get all that?");
+	dialog.push_back("Like with anything else in life, you'll have to practice this to get the \nhang of it.");
+	dialog.push_back("But I know you can do it.");
 	text.setString(dialog.at(dialogID));
 }
 

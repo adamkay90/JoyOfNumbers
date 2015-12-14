@@ -47,7 +47,11 @@ LessonState::LessonState(Game* game) {
 		dialog.push_back("Now maybe you're thinking, \"Shucks, Bob, you got me. But why do\nI need to know this stuff anyway?\" Well, that's cause it's an important\nrule of natural numbers.");
 		dialog.push_back("Mathematicians need all sorts of rules about numbers to be able\nto do stuff with them, even if they sound obvious to us.");
 		dialog.push_back("If we didn't have those rules, we would have never been able to\nget to the moon and see the Earth in all its glory.");
-		dialog.push_back("Oh, but I'm rambling again. I hope you enjoyed learning about\nnatural numbers, and I hope I see you again soon in the next lesson.");
+		dialog.push_back("There's one last thing I'd like to talk about today. Don't worry,\nthis isn't too bad.");
+		dialog.push_back("We can also divide natural numbers. It's a bit different than\ndividing numbers normally since we don't have any fancy\ndecimal numbers like 3.5.");
+		dialog.push_back("Try to think back when you were a kid and learning how to divide\nfor the first time. Do you remember doing long division\nand having remainders?");
+		dialog.push_back("Computers do the same thing. If you ever want to get the remainder\non a computer, you can use the % operator.");
+		dialog.push_back("Oh, but I'm rambling again. I hope you enjoyed learning about\nnatural numbers, and I hope I see you again soon in\nthe next lesson.");
 
 	text.setString(dialog.at(dialogID));
 }
@@ -88,8 +92,7 @@ void LessonState::draw(const float dt)
 
 void LessonState::update(const float dt)
 {
-	// Update anything special in the lessonData
-	// lessonData.update(dt);
+
 }
 
 void LessonState::handleInput()
@@ -150,9 +153,8 @@ void LessonState::handleInput()
 		// Make sure tha callback comes from the button
 		if (callback.id == 1)
 		{
-			// For the back button
-			// this->game->poppedState = true;
-			// this->game->popState();
+			this->game->poppedState = true;
+			this->game->popState();
 		}
 	}
 
