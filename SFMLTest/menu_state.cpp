@@ -16,7 +16,7 @@ void MenuState::draw(const float dt)
 
 void MenuState::update(const float dt)
 {
-
+	
 }
 
 void MenuState::handleInput()
@@ -176,8 +176,15 @@ void MenuState::setupGui() {
 	button2->bindCallback(tgui::Button::LeftMouseClicked);
 	button2->setCallbackId(2);
 	
-	ClientSocket::quiz_score(sf::Uint64(1), sf::Uint64(1));
+	unlock();
+	
+}
 
+void MenuState::unlockMenu(int menuToUnlock) {
+	unlockedMenus.at(menuToUnlock) = true; 
+}
+
+void MenuState::unlock(){
 	ClientSocket::lesson_info();
 	ClientSocket::quiz_info();
 
@@ -188,7 +195,7 @@ void MenuState::setupGui() {
 			unlockMenu(++counter);
 		}
 		else{
-			break; 
+			return; 
 		}
 	}
 	
@@ -198,13 +205,9 @@ void MenuState::setupGui() {
 			unlockMenu(++counter);
 		}
 		else{
-			break;
+			return;
 		}
 	}
-}
-
-void MenuState::unlockMenu(int menuToUnlock) {
-	unlockedMenus.at(menuToUnlock) = true; 
 }
 
 MenuState::~MenuState() {
