@@ -105,6 +105,7 @@ void MenuState::handleInput()
 
 			case 3:
 				//Quiz
+				this->game->pushState(new QuizState(this->game));
 				break;
 			}
 		}
