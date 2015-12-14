@@ -73,16 +73,22 @@ void Game::gameLoop() {
 			poppedState = false;
 			continue;
 		}
+		if (stopLooping) break;
+
 		peekState()->handleInput();
 		if (poppedState) {
 			poppedState = false;
 			continue;
 		}
+		if (stopLooping) break;
+
 		peekState()->update(deltaTime);
 		if (poppedState) {
 			poppedState = false;
 			continue;
 		}
+		if (stopLooping) break;
+		
 		this->window.clear(sf::Color::Black);
 		peekState()->draw(deltaTime);
 		this->window.display();
