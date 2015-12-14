@@ -1,6 +1,8 @@
 #include "menu_state.h"
-#include "client_socket.h";
+#include "client_socket.h"
 #include "lesson_state.h"
+#include "lesson_state_1.h"
+#include "lesson_state_2.h"
 
 void MenuState::draw(const float dt)
 {
@@ -16,7 +18,23 @@ void MenuState::draw(const float dt)
 
 void MenuState::update(const float dt)
 {
-	
+	if (this->game->returnedFromLesson1 == true) {
+		std::cout << "Should be unlocking!" << std::endl;
+		unlock();
+		this->game->returnedFromLesson1 = false;
+	}
+	if (this->game->returnedFromLesson2 == true) {
+		unlock();
+		this->game->returnedFromLesson2 = false;
+	}
+	if (this->game->returnedFromLesson3 == true) {
+		unlock();
+		this->game->returnedFromLesson3 = false;
+	}
+	if (this->game->returnedFromQuiz1 == true) {
+		unlock();
+		this->game->returnedFromQuiz1 = false;
+	}
 }
 
 void MenuState::handleInput()
@@ -54,11 +72,16 @@ void MenuState::handleInput()
 		// A list item was selected
 		if (callback.id == 0) {
 			
+			for each (bool flag in unlockedMenus) {
+				std::cout << flag << " ";
+			}
+			std::cout << std::endl;
+
 			tgui::ListBox::Ptr listbox = gui->get("List");
 			int id = listbox->getSelectedItemId();
 			
 			tgui::Button::Ptr button = gui->get("Button");
-			
+			unlock();
 			// Make the button enabled if the menu item can be selected
 			if (unlockedMenus.at(id) == true) {
 				button->enable();
@@ -88,10 +111,12 @@ void MenuState::handleInput()
 
 			case 1:
 				//Integers
+				this->game->pushState(new LessonState1(this->game));
 				break;
 
 			case 2:
 				//Binary
+				this->game->pushState(new LessonState2(this->game));
 				break;
 
 			case 3:
@@ -101,8 +126,9 @@ void MenuState::handleInput()
 		}
 		// The logout button was clicked
 		else if (callback.id == 2) {
-			
+			this->game->poppedState = true;
 			this->game->popState();
+			return;
 		}
 	}
 
@@ -195,14 +221,14 @@ void MenuState::unlock(){
 			unlockMenu(++counter);
 		}
 		else{
-			return; 
+			++counter;
 		}
 	}
 	
-
 	for (const sf::Uint64 &quiz : client_information::quizzes_){
 		if (quiz != sf::Uint64(0)){
-			unlockMenu(++counter);
+			std::cout << counter << std::endl; 
+			unlockMenu(counter++);
 		}
 		else{
 			return;

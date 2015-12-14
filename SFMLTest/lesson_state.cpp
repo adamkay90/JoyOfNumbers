@@ -123,9 +123,8 @@ void LessonState::handleInput()
 				}
 				else{
 					ClientSocket::lesson_progress(sf::Uint64(2), sf::Uint64(1));
+					this->game->returnedFromLesson1 = true;
 					this->game->popState();
-					this->game->popState();
-					this->game->pushState(new MenuState(game));
 					return; 
 				}
 				break;

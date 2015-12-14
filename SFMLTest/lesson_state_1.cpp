@@ -1,4 +1,6 @@
 #include "lesson_state_1.h"
+#include "client_socket.h"
+#include "menu_state.h"
 
 LessonState1::LessonState1(Game* game) {
 	this->game = game;
@@ -110,8 +112,15 @@ void LessonState1::handleInput()
 		case sf::Event::MouseButtonPressed:
 		{
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-
-				nextDialog();
+				if (dialogID < dialog.size()){
+					ClientSocket::lesson_progress(sf::Uint64(2), sf::Uint64(dialogID + 1));
+					nextDialog();
+				}
+				else{
+					ClientSocket::lesson_progress(sf::Uint64(3), sf::Uint64(1));
+					this->game->popState();
+					return;
+				}
 				break;
 
 			}
