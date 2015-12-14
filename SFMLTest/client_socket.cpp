@@ -487,3 +487,14 @@ void ClientSocket::test(){
 	html();
 	add_user("user6", "Ellyx", "Jolley", "password", false); 
 }
+
+void ClientSocket::reset_data(){
+	client_information::user_id_ = 0;
+	client_information::first_name_ = "";
+	client_information::instructor_ = false;
+	client_information::last_name_ = "";
+	client_information::quizzes_.clear();
+	client_information::sections_.clear();
+	client_information::user_name_ = "";
+
+}
