@@ -342,6 +342,7 @@ void TeacherState::SetupGui() {
 
 	tgui::EditBox::Ptr password_text(*gui, "password");
 	password_text->load("TGUI-0.6/widgets/White.conf");
+	password_text->setPasswordCharacter('*');
 	password_text->setSize(400, 40);
 	password_text->setPosition(200, this->game->window.getSize().y - 470);
 
