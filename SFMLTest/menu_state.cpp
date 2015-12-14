@@ -39,7 +39,11 @@ void MenuState::handleInput()
 		case sf::Event::KeyPressed:
 		{
 			// If the key was the Esc key
-			if (event.key.code == sf::Keyboard::Escape) this->game->window.close();
+			if (event.key.code == sf::Keyboard::Escape) {
+				this->game->window.close();
+				this->game->stopLooping = true;
+				return;
+			}
 
 		}
 		}
