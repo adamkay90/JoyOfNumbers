@@ -14,6 +14,7 @@ private:
 
 	Selection currentChoice;
 	Selection correctAnswer;
+	sf::Uint64 correctAnswerCount;
 	sf::Uint64 quizNumber; 
 	sf::String quizQuestion;
 	sf::String correctWrittenAnswer;

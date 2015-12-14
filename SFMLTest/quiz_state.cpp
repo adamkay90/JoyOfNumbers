@@ -7,6 +7,7 @@ QuizState::QuizState(Game* game)
 	// DATA FOR THE QUIZ
 	//TODO QUIZNUMBER and QUIZ qeuestion must be passed as a constructor argument
 	this->quizNumber = 1;
+	this->correctAnswerCount = 0;
 	this->quizQuestion = "What is the binary representation of the decimal number 5 ?";
 	correctAnswer = Selection::A;
 
@@ -288,6 +289,8 @@ void QuizState::showCorrectAnswer(QuizState::Selection correctAnswer) {
 	// if users pick is the correct answer highlight it green
 	if (currentChoice == correctAnswer) {
 		
+		correctAnswerCount++;
+
 		switch (correctAnswer)
 		{
 		case Selection::A:
