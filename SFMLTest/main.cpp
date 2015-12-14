@@ -11,6 +11,7 @@
 #include "lesson_state.h"
 #include "error_state.h"
 #include "lesson_state_1.h"
+#include "lesson_state_2.h"
 int main()
 {
 	
@@ -18,9 +19,9 @@ int main()
 
 	Game game;
 	
-	game.pushState(new GameStateLogin(&game));
+	// game.pushState(new GameStateLogin(&game));
 	//game.pushState(new MenuState(&game));
-	//game.pushState(new LessonState1(&game));
+	game.pushState(new LessonState2(&game));
 	//game.pushState(new QuizState(&game));
 	//game.pushState(new TeacherState(&game));
 	//game.pushState(new ErrorState(&game, "token"));
