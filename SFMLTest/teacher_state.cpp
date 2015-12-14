@@ -34,12 +34,12 @@ void TeacherState::on_ross_click(){
 		return;
 	}
 	tgui::Picture::Ptr picture = static_cast<tgui::Picture::Ptr>(gui->get("ross"));
-	picture->load("TGUI-0.6/widgets/potato.jpg");
+	picture->load("TGUI-0.6/widgets/potato.png");
 	picture->setSize(497, 541);
 	picture->setPosition((this->game->window.getSize().x)* (1 / 2.f), (this->game->window.getSize().y - 800)*(1 / 2.f));
 }
 void TeacherState::on_submit_click(){
-	std::cout << "potato" << std::endl;
+	//std::cout << "potato" << std::endl;
 	if ((static_cast<tgui::RadioButton::Ptr>(gui->get("radio_register")))->isChecked()){
 		tgui::EditBox::Ptr user_name = static_cast<tgui::EditBox::Ptr>(gui->get("username"));
 
