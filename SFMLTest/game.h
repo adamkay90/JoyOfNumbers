@@ -24,6 +24,11 @@ public:
 
 	bool poppedState;
 	
+	bool returnedFromLesson1;
+	bool returnedFromLesson2;
+	bool returnedFromLesson3;
+	bool returnedFromQuiz1;
+
 	// The state stack
 	std::stack<GameState*> states;
 

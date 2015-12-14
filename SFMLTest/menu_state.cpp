@@ -18,7 +18,23 @@ void MenuState::draw(const float dt)
 
 void MenuState::update(const float dt)
 {
-	
+	if (this->game->returnedFromLesson1 == true) {
+		std::cout << "Should be unlocking!" << std::endl;
+		unlock();
+		this->game->returnedFromLesson1 = false;
+	}
+	if (this->game->returnedFromLesson2 == true) {
+		unlock();
+		this->game->returnedFromLesson2 = false;
+	}
+	if (this->game->returnedFromLesson3 == true) {
+		unlock();
+		this->game->returnedFromLesson3 = false;
+	}
+	if (this->game->returnedFromQuiz1 == true) {
+		unlock();
+		this->game->returnedFromQuiz1 = false;
+	}
 }
 
 void MenuState::handleInput()
@@ -56,11 +72,16 @@ void MenuState::handleInput()
 		// A list item was selected
 		if (callback.id == 0) {
 			
+			for each (bool flag in unlockedMenus) {
+				std::cout << flag << " ";
+			}
+			std::cout << std::endl;
+
 			tgui::ListBox::Ptr listbox = gui->get("List");
 			int id = listbox->getSelectedItemId();
 			
 			tgui::Button::Ptr button = gui->get("Button");
-			
+			unlock();
 			// Make the button enabled if the menu item can be selected
 			if (unlockedMenus.at(id) == true) {
 				button->enable();
@@ -105,8 +126,9 @@ void MenuState::handleInput()
 		}
 		// The logout button was clicked
 		else if (callback.id == 2) {
-			
+			this->game->poppedState = true;
 			this->game->popState();
+			return;
 		}
 	}
 
