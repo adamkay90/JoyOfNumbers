@@ -29,6 +29,8 @@ public:
 	bool returnedFromLesson3;
 	bool returnedFromQuiz1;
 
+	bool stopLooping;
+
 	// The state stack
 	std::stack<GameState*> states;
 

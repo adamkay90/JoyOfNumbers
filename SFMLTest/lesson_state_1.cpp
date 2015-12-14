@@ -106,7 +106,11 @@ void LessonState1::handleInput()
 		case sf::Event::KeyPressed:
 		{
 			// If the key was the Esc key
-			if (event.key.code == sf::Keyboard::Escape) this->game->window.close();
+			if (event.key.code == sf::Keyboard::Escape) {
+				this->game->window.close();
+				this->game->stopLooping = true;
+				return;
+			}
 
 			break;
 		}
@@ -145,9 +149,9 @@ void LessonState1::handleInput()
 		// Make sure tha callback comes from the button
 		if (callback.id == 1)
 		{
-			// For the back button
-			// this->game->poppedState = true;
-			// this->game->popState();
+			this->game->poppedState = true;
+			this->game->popState();
+			return;
 		}
 	}
 

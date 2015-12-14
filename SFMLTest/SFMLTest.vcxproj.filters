@@ -139,6 +139,12 @@
     <Image Include="media\Ross_Strip.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="media\hands.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="media\following_numbers.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="media\Interlude.mp3">

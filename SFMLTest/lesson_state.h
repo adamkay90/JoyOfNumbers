@@ -28,6 +28,10 @@ private:
 	std::vector<std::string> dialog;
 
 	AnimationHandler faceAniHandler;
+	sf::Sprite animatedSprite;
+
+	float animationTimer;
+	float animationTime;
 
 public:
 

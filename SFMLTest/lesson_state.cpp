@@ -80,6 +80,31 @@ void LessonState::draw(const float dt)
 	this->game->window.draw(textBubble);
 	this->game->window.draw(text);
 
+	switch (dialogID) {
+	case 3: {
+		sf::Sprite sprite;
+		sprite.setTexture(this->game->texManager.getRef("hands"));
+		sprite.setOrigin(sprite.getTextureRect().width / 2.0f, sprite.getTextureRect().height / 2.0f);
+		sprite.setPosition(sf::Vector2f(this->game->window.getSize().x / 2.0f, 300));
+		this->game->window.draw(sprite);
+		break;
+	}
+	case 4: {
+		
+		animatedSprite.setTexture(this->game->texManager.getRef("zero"));
+
+		this->game->window.draw(animatedSprite);
+		break;
+	}
+	case 5: {
+		sf::Sprite sprite;
+		sprite.setTexture(this->game->texManager.getRef("following_numbers"));
+		sprite.setOrigin(sprite.getTextureRect().width / 2.0f, sprite.getTextureRect().height / 2.0f);
+		sprite.setPosition(sf::Vector2f(this->game->window.getSize().x / 2.0f, 300));
+		sprite.setScale(sf::Vector2f(2.5f, 2.5f));
+		this->game->window.draw(sprite);
+	}
+	}
 
 	// Setup the gui and render it on top
 	gui->draw();
@@ -92,7 +117,23 @@ void LessonState::draw(const float dt)
 
 void LessonState::update(const float dt)
 {
-
+	switch (dialogID) {
+	case 4: {
+		animationTimer -= dt;
+		if (animationTimer < 0) {
+			animationTime = 0.2f;
+			int randWidth = std::rand() % this->game->window.getSize().x;
+			int randHeight = std::rand() % this->game->window.getSize().y;
+			animatedSprite.setPosition(randWidth, randHeight);
+			float randAngle = std::rand() % 360;
+			float scale1 = std::rand() % 5;
+			animatedSprite.setScale(sf::Vector2f(scale1, scale1));
+			animatedSprite.setRotation(randAngle);
+			animationTimer = animationTime;
+		}
+		break;
+	}
+	}
 }
 
 void LessonState::handleInput()
@@ -113,7 +154,11 @@ void LessonState::handleInput()
 		case sf::Event::KeyPressed:
 		{
 			// If the key was the Esc key
-			if (event.key.code == sf::Keyboard::Escape) this->game->window.close();
+			if (event.key.code == sf::Keyboard::Escape) {
+				this->game->window.close();
+				this->game->stopLooping = true;
+				return;
+			}
 
 			break;
 		}
@@ -155,6 +200,7 @@ void LessonState::handleInput()
 		{
 			this->game->poppedState = true;
 			this->game->popState();
+			return;
 		}
 	}
 

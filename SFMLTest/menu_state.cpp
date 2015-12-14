@@ -39,7 +39,11 @@ void MenuState::handleInput()
 		case sf::Event::KeyPressed:
 		{
 			// If the key was the Esc key
-			if (event.key.code == sf::Keyboard::Escape) this->game->window.close();
+			if (event.key.code == sf::Keyboard::Escape) {
+				this->game->window.close();
+				this->game->stopLooping = true;
+				return;
+			}
 
 		}
 		}
@@ -56,11 +60,6 @@ void MenuState::handleInput()
 		// A list item was selected
 		if (callback.id == 0) {
 			
-			for each (bool flag in unlockedMenus) {
-				std::cout << flag << " ";
-			}
-			std::cout << std::endl;
-
 			tgui::ListBox::Ptr listbox = gui->get("List");
 			int id = listbox->getSelectedItemId();
 			
@@ -209,28 +208,19 @@ void MenuState::unlock(){
 	ClientSocket::lesson_info();
 	ClientSocket::quiz_info();
 
-
-
-	int counter = -1; 
-
-	for (const sf::Uint64 &section : client_information::sections_){
-		if (section != sf::Uint64(0)){
-			unlockMenu(++counter);
-		}
-		else{
-			++counter;
-		}
+	if (client_information::sections_[0] != sf::Uint64(0)){
+		unlockMenu(0); 
+	}
+	if (client_information::sections_[1] != sf::Uint64(0)){
+		unlockMenu(1);
+	}
+	if (client_information::sections_[2] != sf::Uint64(0)){
+		unlockMenu(2);
+	}
+	if (client_information::quizzes_[0] != sf::Uint64(0)){
+		unlockMenu(3);
 	}
 	
-	for (const sf::Uint64 &quiz : client_information::quizzes_){
-		if (quiz != sf::Uint64(0)){
-			std::cout << counter << std::endl; 
-			unlockMenu(counter++);
-		}
-		else{
-			return;
-		}
-	}
 }
 
 MenuState::~MenuState() {
