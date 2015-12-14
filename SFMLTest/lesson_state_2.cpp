@@ -1,5 +1,6 @@
 #include "lesson_state_2.h"
-
+#include "client_socket.h"
+#include "menu_state.h"
 LessonState2::LessonState2(Game* game) {
 	this->game = game;
 	sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
@@ -116,8 +117,15 @@ void LessonState2::handleInput()
 		case sf::Event::MouseButtonPressed:
 		{
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-
-				nextDialog();
+				if (dialogID < dialog.size()){
+					ClientSocket::lesson_progress(sf::Uint64(3), sf::Uint64(dialogID + 1));
+					nextDialog();
+				}
+				else{
+					ClientSocket::quiz_score(sf::Uint64(1), sf::Uint64(1));
+					this->game->popState();
+					return;
+				}
 				break;
 
 			}

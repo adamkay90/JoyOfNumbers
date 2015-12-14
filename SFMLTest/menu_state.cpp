@@ -1,6 +1,8 @@
 #include "menu_state.h"
-#include "client_socket.h";
+#include "client_socket.h"
 #include "lesson_state.h"
+#include "lesson_state_1.h"
+#include "lesson_state_2.h"
 
 void MenuState::draw(const float dt)
 {
@@ -88,10 +90,12 @@ void MenuState::handleInput()
 
 			case 1:
 				//Integers
+				this->game->pushState(new LessonState1(this->game));
 				break;
 
 			case 2:
 				//Binary
+				this->game->pushState(new LessonState2(this->game));
 				break;
 
 			case 3:
@@ -195,14 +199,14 @@ void MenuState::unlock(){
 			unlockMenu(++counter);
 		}
 		else{
-			return; 
+			++counter;
 		}
 	}
 	
-
 	for (const sf::Uint64 &quiz : client_information::quizzes_){
 		if (quiz != sf::Uint64(0)){
-			unlockMenu(++counter);
+			std::cout << counter << std::endl; 
+			unlockMenu(counter++);
 		}
 		else{
 			return;
