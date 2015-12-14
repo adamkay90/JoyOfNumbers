@@ -49,6 +49,8 @@ void Game::loadTextures()
 	texManager.loadTexture("next", "media/next.png");
 	texManager.loadTexture("text_bubble", "media/text_bubble.png");
 	texManager.loadTexture("Ross_Strip", "media/Ross_Strip.png");
+	texManager.loadTexture("hands", "media/hands.png");
+	texManager.loadTexture("following_numbers", "media/following_numbers.png");
 }
 
 void Game::gameLoop() {

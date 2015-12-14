@@ -48,6 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="media\background.png" />
+    <Image Include="media\following_numbers.png" />
+    <Image Include="media\hands.png" />
     <Image Include="media\Logo.png" />
     <Image Include="media\next.png" />
     <Image Include="media\one.png" />

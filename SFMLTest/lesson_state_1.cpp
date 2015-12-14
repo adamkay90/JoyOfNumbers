@@ -145,9 +145,9 @@ void LessonState1::handleInput()
 		// Make sure tha callback comes from the button
 		if (callback.id == 1)
 		{
-			// For the back button
-			// this->game->poppedState = true;
-			// this->game->popState();
+			this->game->poppedState = true;
+			this->game->popState();
+			return;
 		}
 	}
 
