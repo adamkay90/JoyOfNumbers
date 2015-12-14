@@ -206,8 +206,8 @@ void QuizState::processQuestionGuiState(){
 	{
 	case 1:
 	{
-			  updateMultipleChoiceQuestion(quizNumber, "What is the smalles natural number", " -1", " 1", " 0", " -inf");
-			  correctAnswer = Selection::A;
+			  updateMultipleChoiceQuestion(quizNumber, "What is the smallest natural number", " -1", " 1", " 0", " -inf");
+			  correctAnswer = Selection::C;
 			  quizNumber++;
 			  break;
 	}
