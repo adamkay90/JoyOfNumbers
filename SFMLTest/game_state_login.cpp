@@ -2,7 +2,7 @@
 #include "client_socket.h"
 #include "teacher_state.h"
 #include "menu_state.h"
-
+#include "error_state.h"
 void GameStateLogin::draw(const float dt)
 {
 	this->game->window.setView(this->view);
@@ -198,7 +198,7 @@ void GameStateLogin::loadMenu()
 void GameStateLogin::onLoginButtonClick() {
 	sf::Uint64 return_enum = ClientSocket::login(game->username, game->password); 
 	if (return_enum != sf::Uint64(1)){
-		//TODO: errors
+		this->game->pushState(new ErrorState(this->game, "Login failed"));
 	}
 	else{
 		game->firstName = client_information::first_name_; 
