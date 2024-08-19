@@ -4,7 +4,7 @@ An educational program.
 
 Team Drop Table Users
 Dave Heyborne
-Bernard Serbinowski
+Serena Serafina Serbinowska
 Ellyx Jolley
 Hyunjin Cho
 Ali Momeni
